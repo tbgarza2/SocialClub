@@ -41,6 +41,6 @@
     "file-system": "^2.2.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-hot-loader": "^4.3.11"
+    "react-hot-loader": "^4.3.11",
     "express": "^4.17.1"
 }
