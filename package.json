@@ -1,0 +1,19 @@
+{
+  "name": "greenfield-socialclub-kit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reversedOreo/SocialClub.git"
+  },
+  "author": "gordon styron",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reversedOreo/SocialClub/issues"
+  },
+  "homepage": "https://github.com/reversedOreo/SocialClub#readme"
+}
