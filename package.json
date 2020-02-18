@@ -1,23 +1,26 @@
 {
-  "name": "socialclub",
+  "name": "greenfield-socialclub-kit",
   "version": "1.0.0",
-  "description": "GreenField",
-  "main": "main.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "babel --presets es2015 src/main.js -o build/main.bundle.js",
-    "start": "webpack-dev-server --mode development",
-    "build": "webpack --mode development"
+    "start:client": "webpack-dev-server --mode development",
+    "build": "webpack --mode development",
+    "start:server": "node server/index.js",
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JJohnson45/SocialClub.git"
+    "url": "git+https://github.com/reversedOreo/SocialClub.git"
   },
-  "author": "Johndareous,Blake,Gordon",
+  "author": "ReversedOreo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JJohnson45/SocialClub/issues"
+    "url": "https://github.com/reversedOreo/SocialClub/issues"
   },
-  "homepage": "https://github.com/JJohnson45/SocialClub#readme",
+  "homepage": "https://github.com/reversedOreo/SocialClub#readme",
   "devDependencies": {
     "@babel/cli": "^7.1.0",
     "@babel/core": "^7.1.0",
