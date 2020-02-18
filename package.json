@@ -1,0 +1,43 @@
+{
+  "name": "socialclub",
+  "version": "1.0.0",
+  "description": "GreenField",
+  "main": "main.js",
+  "scripts": {
+    "babel": "babel --presets es2015 src/main.js -o build/main.bundle.js",
+    "start": "webpack-dev-server --mode development",
+    "build": "webpack --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JJohnson45/SocialClub.git"
+  },
+  "author": "Johndareous,Blake,Gordon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JJohnson45/SocialClub/issues"
+  },
+  "homepage": "https://github.com/JJohnson45/SocialClub#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.2",
+    "babel-preset-es2015": "^6.24.1",
+    "css-loader": "^1.0.0",
+    "http-server": "^0.12.1",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "file-system": "^2.2.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-hot-loader": "^4.3.11"
+  }
+}
