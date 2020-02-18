@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/reversedOreo/SocialClub/issues"
   },
-  "homepage": "https://github.com/reversedOreo/SocialClub#readme"
+  "homepage": "https://github.com/reversedOreo/SocialClub#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
