@@ -2,12 +2,24 @@
 <html>
 
 <head>
-  <title>Github Repo Fetcher</title>
+  <title>Social Club</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <meta name="google-signin-client_id" content="757277569401-7dbtsdk1t5ticaosl40qubmc6sr6v2k3.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src = "../src/script.js"></script>
+  <style>
+    .g-signIn2{
+      margin-left:500;
+      margin-top:200,
+    }
+  </style>
 </head>
 
 <body>
   <div id="app"></div>
   <script type="text/javascript" src="bundle.js"></script>
+  <div class= "g-signin2" data-onSuccess = "onSignIn"></div></div>
 </body>
 
 </html>

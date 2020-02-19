@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "babel --presets es2015 src/main.js -o build/main.bundle.js",
-    "start:client": "webpack-dev-server --mode development",
+    "startclient": "webpack-dev-server --mode development",
     "build": "webpack --mode development",
     "start:server": "node server/index.js",
     "start": "node server/index.js"
