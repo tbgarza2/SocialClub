@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 module.exports = {
-  entry: "./SocialClub/src/index.js",
+  entry: "./client/src/index.js",
   mode: "development",
   target: "node",
   module: {
