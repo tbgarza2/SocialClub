@@ -7,8 +7,8 @@ env_variables:
 
 handlers:
 - url: /
-  static_files: index.html
-  upload: index.html
+  static_files: client/dist/index.html
+  upload: client/dist/index.html
 
 - url: /.*
   secure: always
