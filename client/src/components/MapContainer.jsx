@@ -10,9 +10,17 @@ class MapContainer extends Component {
   }
   
   render() {
+
+    const styles = {
+      map: {
+        margin:'50px'
+      }
+    }
+
     return (
       <div>
         <Map
+          style={styles.map}
           google={this.props.google}
           zoom={8}
           // style={mapStyles}
