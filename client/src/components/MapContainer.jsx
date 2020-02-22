@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { GOOGLE_TOKEN } from './googleConfig'
 
 class MapContainer extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class MapContainer extends Component {
           zoom={8}
           // style={mapStyles}
           initialCenter={{ lat: 47.444, lng: -122.176}}
+          disableDefaultUI={true}
         />
       </div>
     );
@@ -35,5 +37,5 @@ MapContainer.propTypes = {
 };
 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyDCtfoHWJ8v0Nxrpf8NkhEy6xTxpCPOL3c'
+    apiKey: GOOGLE_TOKEN,
   })(MapContainer);
