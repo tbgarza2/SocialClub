@@ -49,7 +49,7 @@ class ChatApp extends Component {
                 })
             })
             .catch(error => console.log(error))
-        }
+    }
 
 
     addMessage(text) {
@@ -64,9 +64,12 @@ class ChatApp extends Component {
     render() {
         return (
             <div>
-                <h2 className="header">Let's Talk</h2>
-                <MessageList messages={this.state.messages} />
-                <Input className="input-field" onSubmit={this.addMessage} />
+                <button data-toggle="collapse" data-target="#demo">-</button>
+                <div id="demo" className="collapse">
+                    <h2 className="header">Let's Talk</h2>
+                    <MessageList messages={this.state.messages} />
+                    <Input className="input-field" onSubmit={this.addMessage} />
+                </div>
             </div>
         )
     }
