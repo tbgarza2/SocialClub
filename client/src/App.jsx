@@ -49,6 +49,7 @@ class App extends React.Component {
         currentView: 'chatApp'
       })
     }).catch((err) => {
+      console.log(err)
       if (err.status === 400) {
         this.setState({
           currentUsername: username,
