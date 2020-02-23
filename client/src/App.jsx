@@ -134,7 +134,10 @@ class App extends React.Component {
         </Menu>
         {/* chatbox */}
         <div className="Chat">
+        <button data-toggle="collapse" data-target="#demo">-</button>
+        <div id="demo" className="collapse">
           {view}
+        </div>
         </div>
       </div>
     );
