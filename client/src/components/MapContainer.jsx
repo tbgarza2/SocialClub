@@ -24,6 +24,8 @@ class MapContainer extends Component {
           style={styles.map}
           google={this.props.google}
           zoom={8}
+          minZoom={2}
+          maxZoom={15}
           // style={mapStyles}
           initialCenter={{ lat: 47.444, lng: -122.176}}
           disableDefaultUI={true}
