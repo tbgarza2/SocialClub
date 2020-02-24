@@ -1,9 +1,20 @@
 function onSignIn(googleUser){
 let profile = googleUser.getBasicProfile();
-// $(".g-signin2").css("display", "none");
-// $(".data").css("display", "block");
-// $("#pic").attr('src', profile.getImageUrl());
-// $("#email").text(profile.getEmail());
+let id_token = googleUser.getAuthResponse().id_token;
+
+$(".g-signin2").css("display", "none");
+$(".data").css("display", "block");
+$("#pic").attr('src', profile.getImageUrl());
+$("#email").text(profile.getEmail());
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://yourbackend.example.com/tokensignin');
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onload = function () {
+    console.log('Signed in as: ' + xhr.responseText);
+  };
+  xhr.send('idtoken=' + id_token);
+
 }
 
 function signOut(){
@@ -15,5 +26,5 @@ function signOut(){
     })
 }
 module.exports = {
-  Repos,
+  signOut,
 }
