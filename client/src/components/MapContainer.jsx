@@ -7,9 +7,9 @@ class MapContainer extends Component {
   constructor(props) {
     super(props);
 
-     //this.loadMap = this.loadMap.bind(this);
+    //  this.loadMap = this.loadMap.bind(this);
   }
-  
+
   render() {
 
     const styles = {
