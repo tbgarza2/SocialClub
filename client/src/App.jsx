@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import { hot } from "react-hot-loader";
+import MapContainer from "./components/MapContainer"
 import axios from 'axios'
+
 //Topbar Menu imports
 import MenuItem from "./MenuItem"
 import Menu from './Menu'
@@ -133,11 +135,11 @@ class App extends React.Component {
         <Menu open={this.state.menuOpen}>
           {menuItems}
         </Menu>
+        <MapContainer></MapContainer>
         {/* chatbox */}
         <div className="Chat">
           {view}
         </div>
-
       </div>
     );
   }
