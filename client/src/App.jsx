@@ -5,8 +5,6 @@ import { hot } from "react-hot-loader";
 import MenuItem from "./MenuItem"
 import Menu from './Menu'
 import MenuButton from './MenuButton'
-//import googleLogin from "react-google-login"
-import { response } from "express";
 
 
 class App extends React.Component {
@@ -57,15 +55,13 @@ class App extends React.Component {
     const menu = ['Home', 'Created Events', 'RSVP\'d Events', ]
     const menuItems = menu.map((val,index)=>{
       return (
+        
         <MenuItem 
+        
           key={index} 
           delay={`${index * 0.1}s`}
           onClick={()=>{this.handleLinkClick();}}>{val}</MenuItem>)
     });
-
-    const respo = (google) => {
-      console.log(google);
-    }
     
     return(
       <div>
@@ -74,6 +70,7 @@ class App extends React.Component {
           <div style={styles.logo}>Social Club</div>
         </div>
         <Menu open={this.state.menuOpen}>
+          <div class="g-signin2" data-onsuccess="onSignIn"></div>
           {menuItems}
         </Menu>
       </div>
