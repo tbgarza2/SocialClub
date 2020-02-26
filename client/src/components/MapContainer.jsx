@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { GOOGLE_TOKEN } from './googleConfig'
+// import Marker from './Marker';
 
 class MapContainer extends Component {
   constructor(props) {
     super(props);
-
-    //  this.loadMap = this.loadMap.bind(this);
+    this.state = {
+      markers: props.markers || [],
+    };
   }
-
+  
   render() {
 
     const styles = {
@@ -29,7 +31,9 @@ class MapContainer extends Component {
           // style={mapStyles}
           initialCenter={{ lat: 47.444, lng: -122.176}}
           disableDefaultUI={true}
-        />
+        >
+          {this.state.markers.map(marker => <Marker position={marker.position}/>)}
+        </Map>
       </div>
     );
   }
