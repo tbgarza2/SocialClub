@@ -135,7 +135,12 @@ class App extends React.Component {
         <Menu open={this.state.menuOpen}>
           {menuItems}
         </Menu>
-        <MapContainer></MapContainer>
+        <MapContainer markers={[{
+          position: {lat: 47.444, lng: -122.176}
+        },
+        {
+          position: {lat: 50.444, lng: -122.176}
+        }]}></MapContainer>
         {/* chatbox */}
         <div className="Chat">
           {view}
