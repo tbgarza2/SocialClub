@@ -12,6 +12,7 @@ import MenuButton from './MenuButton'
 import ChatMessage from './Components/ChatMessage';
 import Signup from './Components/Signup';
 import ChatApp from './Components/ChatApp';
+import CreateEvent from "./CreateEvent";
 
 
 class App extends React.Component {
@@ -135,7 +136,8 @@ class App extends React.Component {
         <Menu open={this.state.menuOpen}>
           {menuItems}
         </Menu>
-        <MapContainer></MapContainer>
+        {/* <MapContainer /> */}
+        <CreateEvent />
         {/* chatbox */}
         <div className="Chat">
           {view}

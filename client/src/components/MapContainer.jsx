@@ -19,7 +19,7 @@ class MapContainer extends Component {
     }
 
     return (
-      <div>
+      <div ClassName='map'>
         <Map
           style={styles.map}
           google={this.props.google}

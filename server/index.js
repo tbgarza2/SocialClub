@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const Chatkit = require('@pusher/chatkit-server');
 const { chatkitRouter } = require('./api/chatkit');
+const { dbRouter } = require('./api/db');
 
 const app = express();
 
@@ -12,6 +13,7 @@ const CLIENT_PATH = path.join(__dirname, '../client/dist');
 app.use(express.static(CLIENT_PATH));
 app.use(bodyParser.json());
 app.use('/api/chatkit', chatkitRouter);
+app.use('/api/db', dbRouter)
 
 const chatkit = new Chatkit.default({
   instanceLocator: 'v1:us1:c505ed27-4164-40ae-93c1-3c5e0f669521',

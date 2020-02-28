@@ -15,6 +15,7 @@ CREATE TABLE `events` (
   `name` varchar(20),
   `time` date,
   `category_id` int,
+  `category` varchar(20),
   `location` varchar(50),
   `creator_id` int,
   `summary` varchar(244),

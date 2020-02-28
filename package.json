@@ -44,6 +44,7 @@
     "express": "^4.17.1",
     "file-system": "^2.2.2",
     "google-maps-react": "^2.0.2",
+    "mysql": "^2.18.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-hot-loader": "^4.3.11"
