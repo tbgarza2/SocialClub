@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "babel --presets es2015 src/main.js -o build/main.bundle.js",
-    "startclient": "webpack-dev-server --mode development",
+    "start:client": "webpack-dev-server --mode development --watch",
     "build": "webpack --mode development",
     "start:server": "node server/index.js",
     "start": "node server/index.js"
@@ -38,10 +38,14 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "@pusher/chatkit-client": "^1.13.4",
+    "@pusher/chatkit-server": "^2.4.0",
+    "axios": "^0.19.2",
     "express": "^4.17.1",
     "file-system": "^2.2.2",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "google-maps-react": "^2.0.2",
+    "react": "0.0.0-d28bd2994",
+    "react-dom": "0.0.0-d28bd2994",
     "react-google-login": "^5.1.1",
     "react-hot-loader": "^4.3.11"
   }
