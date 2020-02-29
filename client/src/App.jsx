@@ -22,12 +22,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      googleUser: [],
       menuOpen: false,
       currentUsername: '',
       currentId: '',
       currentView: 'Signup',
       appView: 'Home'
     }
+   //console.log(googleUser);
     this.changeView = this.changeView.bind(this);
     this.createUser = this.createUser.bind(this);
     //this.userProfile = this.userProfile.bind(this)
@@ -100,7 +102,8 @@ class App extends React.Component {
       console.log(googleUser, "settingstate");
        this.setState({
         appView: 'UserProfile',
-        currentUsername: googleUser.profileObj.name
+        currentUsername: googleUser.profileObj.name,
+        googleUser: googleUser
       })
     }
     
@@ -166,7 +169,7 @@ class App extends React.Component {
       appView = <Home handleClick={this.createEvent} />
     } 
     if (this.state.appView === 'UserProfile') {
-      appView = <UserProfile></UserProfile>
+      appView = <UserProfile user = {this.state.googleUser}></UserProfile>
     }
       
     return (
