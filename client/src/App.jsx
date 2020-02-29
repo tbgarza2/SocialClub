@@ -201,7 +201,7 @@ class App extends React.Component {
     <div id = "name" className="col-sm-4"></div>
     <div id="id" className="col-sm-4"></div>
     
-          <button className="btn btn danger" onClick={this.signOut}>Sign Out</button>
+          <button className="dangerButton" onClick={this.signOut}>Sign Out</button>
     </div>
   
       
