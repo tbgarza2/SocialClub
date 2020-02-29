@@ -14,6 +14,8 @@ import Signup from './Components/Signup';
 import ChatApp from './Components/ChatApp';
 import CreateEvent from "./CreateEvent";
 import Home from "./Components/Home"
+import UserEvents from "./Components/UserEvents";
+import AttendingEvents from "./Components/AttendingEvents";
 
 
 class App extends React.Component {
@@ -141,7 +143,12 @@ class App extends React.Component {
       appView = <Home handleClick={this.createEvent} />
     } else if (this.state.appView === 'CreateEvent'){
       appView = <CreateEvent />
+    } else if (this.state.appView === 'Created Events'){
+      appView = <UserEvents />
+    } else if (this.state.appView === 'RSVP\'d Events') {
+      appView = <AttendingEvents />
     }
+    
     return (
       <div>
         {/* navbar  */}

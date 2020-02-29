@@ -25,3 +25,12 @@ chatkit.createUser({
 module.exports = {
     chatkitRouter,
   };
+
+  chatkitRouter.post('/rooms', (req, res) => {
+    chatkit.createRoom({
+      id: req.body.id,
+      creatorId: req.body.creatorId,
+      name: req.body.name
+    }) .then(() => console.log(`Room created: ${req.body.id}`))
+    .catch(err => console.log(err))
+  })

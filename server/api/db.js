@@ -1,12 +1,13 @@
 const { Router } = require('express');
 const dbRouter = Router();
-const { saveEvent} =require('../db/index.js')
+const { saveEvent } =require('../db/index.js')
 
 
 dbRouter.post('/events', (req,res) =>{
     console.log(req)
 saveEvent(req.body)
-});
+})
+.then(res => res.status(200));
 
 dbRouter.get('/events', (req,res) => {
 
