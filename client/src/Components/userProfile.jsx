@@ -18,10 +18,15 @@ console.log(props);
     $("#id").text(profile.getId());
     
   return (
-    <div className="Chat">
       
-       {/* <button onclick = "signOut()" class = "btn btn danger">Sign Out</button> */}
-        </div>
+    <div className = "test">
+      <img id="pic" className="img-circle" width="100" height="100" src={this.props.user.profileObj.imageUrl}/> 
+      <h2 className="emailAddy"> Welcome Back {this.props.userName}!</h2>
+      <div id="email" className="col-sm-4"> {this.props.user.profileObj.email}</div>
+      <div id="name" className="col-sm-4"> {this.props.user.profileObj.name}</div>
+      <div id="id" className="col-sm-4"> {this.props.user.profileObj.googleId}</div>
+      <button className="dangerButton" onClick={this.signOut}>Sign Out</button>
+    </div>
   
   )
   }

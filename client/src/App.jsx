@@ -110,7 +110,7 @@ class App extends React.Component {
     const onSignIn = (googleUser) => {
       console.log(googleUser, "settingstate");
        this.setState({
-        appView: 'UserProfile',
+         appView: 'Profile Page',
         currentUsername: googleUser.profileObj.name,
         googleUser: googleUser
       })
@@ -119,7 +119,6 @@ class App extends React.Component {
     //navbar css
     const styles =
     {
-     
       container: {
         position: 'absolute',
         top: 0,
@@ -148,7 +147,7 @@ class App extends React.Component {
       },
     }
     //navbar menu items
-    const menu = ['Home', 'Created Events', 'RSVP\'d Events',]
+    const menu = ['Home', 'Created Events', 'RSVP\'d Events', 'Profile Page']
     const menuItems = menu.map((val, index) => {
       return (
         <MenuItem
@@ -175,8 +174,8 @@ class App extends React.Component {
     if (this.state.appView === 'Home') {
       appView = <Home handleClick={this.createEvent} />
     } 
-    else if (this.state.appView === 'UserProfile') {
-      appView = <UserProfile user = {this.state.googleUser}></UserProfile>
+    else if (this.state.appView === 'Profile Page') {
+      appView = <UserProfile user = {this.state.googleUser} userName = {this.state.currentUsername}></UserProfile>
     }
       
     return (
@@ -192,17 +191,8 @@ class App extends React.Component {
           </div>
 
 
-      <div className = "data">
-        <img id="pic" className = "img-circle" width = "100" height = "100"></img>
-          {/* <p id="email" className = "alert alert danger">.col</p> */}
-          <h2 className="emailAddy"> Welcome Back {this.state.currentUsername}!</h2>
-          {/* <div className="emailAddy"> Email Address</div> */}
-       <div id="email" className="col-sm-4">.col-sm-4</div>
-    <div id = "name" className="col-sm-4"></div>
-    <div id="id" className="col-sm-4"></div>
-    
-          <button className="dangerButton" onClick={this.signOut}>Sign Out</button>
-    </div>
+        
+
   
       
         
@@ -217,13 +207,7 @@ class App extends React.Component {
           {menuItems}
         </Menu>
         </div>
-        {/* <Home /> */}
-        {/* <CreateEvent /> */}
-        {/* chatbox */}
         {appView}
-        {/* <div className="Chat">
-          {view}
-        </div> */}
       </div>
     );
   }
