@@ -182,8 +182,15 @@ class App extends React.Component {
           
           {menuItems}
         </Menu>
-        {/* <MapContainer></MapContainer> */}
-
+        <MapContainer events={[{
+          address: "new york",
+          id: 1,
+        },
+        {
+          address: "252, florida, st, riverridge, louisiana, 70123, united states",
+          id: 2,
+        }]}></MapContainer>
+        {/* chatbox */}
         <div className="Chat">
           {view}
         </div>
