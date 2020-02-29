@@ -23,13 +23,21 @@ class App extends React.Component {
       menuOpen: false,
       currentUsername: '',
       currentId: '',
-      currentView: 'Signup'
+      currentView: 'Signup',
+      appView: 'Home'
     }
     this.changeView = this.changeView.bind(this);
     this.createUser = this.createUser.bind(this);
+    //this.userProfile = this.userProfile.bind(this)
   }
 
   // changes chat view
+  // userProfile() {
+  //   this.setState({
+  //     appView: 'UserProfile'
+  //   })
+  // }
+
   changeView(view) {
     this.setState({
       currentView: view
@@ -78,10 +86,11 @@ class App extends React.Component {
       console.log(response)
     }
     const onSignIn = (googleUser) => {
-      console.log(googleUser);
+      console.log(googleUser, "settingstate");
        
-      this.setState({
-        currentView: 'userProfile',
+      this.setState(
+        {
+        appView: 'UserProfile',
         currentUsername: googleUser.profileObj.name
       })
     //   if (this.state.currentView === "UserProfile") {
@@ -143,10 +152,14 @@ class App extends React.Component {
     } else if (this.state.currentView === "chatApp") {
         view = <ChatApp currentid={this.state.currentId} />
      } 
-     else if (this.state.currentView === "userProfile") {
-      view = <UserProfile currentUsername={this.state.currentUsername} />
-    }
+    //  else if (this.state.currentView === "userProfile") {
+    //   view = <UserProfile currentUsername={this.state.currentUsername} />
+    // }
 
+    let appView = '';
+    if (this.state.appView === 'UserProfile') {
+      appView = <UserProfile></UserProfile>
+    }
       
     return (
       <div>
@@ -191,6 +204,7 @@ class App extends React.Component {
           id: 2,
         }]}></MapContainer>
         {/* chatbox */}
+        {appView}
         <div className="Chat">
           {view}
         </div>
