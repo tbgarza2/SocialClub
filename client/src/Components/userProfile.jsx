@@ -5,7 +5,7 @@ class UserProfile extends Component {
 console.log(props);
   }
   render (){
-    // function onSignIn(googleUser) {
+   
       let profile = this.props.user.getBasicProfile();
     let id_token = this.props.user.getAuthResponse().id_token;
       console.log("worked");
@@ -13,7 +13,10 @@ console.log(props);
       $(".data").css("display", "block");
     $("#pic").attr('src', profile.getImageUrl());
     $("#email").text(profile.getEmail());
-    //}
+    //console.log("JD" + profile.getName())
+    $("#name").text(profile.getName());
+    $("#id").text(profile.getId());
+    
   return (
     <div className="Chat">
       

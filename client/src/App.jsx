@@ -32,7 +32,7 @@ class App extends React.Component {
    //console.log(googleUser);
     this.changeView = this.changeView.bind(this);
     this.createUser = this.createUser.bind(this);
-    //this.userProfile = this.userProfile.bind(this)
+    this.signOut = this.signOut.bind(this)
     this.createEvent = this.createEvent.bind(this)
   }
 
@@ -53,6 +53,15 @@ class App extends React.Component {
       currentView: view
     })
   }
+
+  signOut() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    alert("You have been successfully signed out");
+    $(".g-signin2").css("display", "block");
+    $(".data").css("display", "none");
+  })
+}
   //chat sign up
   createUser(username) {
     axios({
@@ -160,15 +169,13 @@ class App extends React.Component {
     } else if (this.state.currentView === "chatApp") {
         view = <ChatApp currentid={this.state.currentId} />
      } 
-    //  else if (this.state.currentView === "userProfile") {
-    //   view = <UserProfile currentUsername={this.state.currentUsername} />
-    // }
+    
 
     let appView = '';
     if (this.state.appView === 'Home') {
       appView = <Home handleClick={this.createEvent} />
     } 
-    if (this.state.appView === 'UserProfile') {
+    else if (this.state.appView === 'UserProfile') {
       appView = <UserProfile user = {this.state.googleUser}></UserProfile>
     }
       
@@ -187,12 +194,14 @@ class App extends React.Component {
 
       <div className = "data">
         <img id="pic" className = "img-circle" width = "100" height = "100"></img>
-          <p id="email" className = "alert alert danger">.col</p>
-      <h2 class = "emailAddy"> Email Address</h2>
+          {/* <p id="email" className = "alert alert danger">.col</p> */}
+          <h2 className="emailAddy"> Welcome Back {this.state.currentUsername}!</h2>
+          {/* <div className="emailAddy"> Email Address</div> */}
        <div id="email" className="col-sm-4">.col-sm-4</div>
-    <div className="col-sm-4">.col-sm-4</div>
-    <div className="col-sm-4">.col-sm-4</div>
-        <button  className = "btn btn danger">Sign Out</button>
+    <div id = "name" className="col-sm-4"></div>
+    <div id="id" className="col-sm-4"></div>
+    
+          <button className="btn btn danger" onClick={this.signOut}>Sign Out</button>
     </div>
   
       
