@@ -5,6 +5,7 @@ class CreateEvent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentUser: 'test',
             name: '',
             address: '',
             date: '',
@@ -21,7 +22,7 @@ class CreateEvent extends React.Component {
 
     handleSubmit(event) {
         console.log('clicked')
-        const { name, address, date, category, summary } = this.state
+        const { name, address, date, category, summary, currentUser } = this.state
         axios({
             method: 'post',
             url: 'api/db/events',
@@ -31,9 +32,23 @@ class CreateEvent extends React.Component {
               date: date,
               category: category,
               summary: summary,
+              creator: currentUser,
+              roomId: name,
             }
     })
-    .then( () => console.log('added'))
+    .then( () => {
+        console.log('added')
+        axios({
+            method: 'post',
+            url: 'api/chatkit/rooms',
+            data: {
+                id: name,
+                creatorId: currentUser,
+                name: name,
+            }
+    })
+    .then( () => console.log('Room created'))
+})
     .catch(err => console.log(err));
 }
 

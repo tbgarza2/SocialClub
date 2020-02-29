@@ -13,6 +13,7 @@ import ChatMessage from './Components/ChatMessage';
 import Signup from './Components/Signup';
 import ChatApp from './Components/ChatApp';
 import CreateEvent from "./CreateEvent";
+import Home from "./Components/Home"
 
 
 class App extends React.Component {
@@ -22,12 +23,19 @@ class App extends React.Component {
       menuOpen: false,
       currentUsername: '',
       currentId: '',
-      currentView: 'Signup'
+      currentView: 'Signup',
+      appView: 'Home'
     }
     this.changeView = this.changeView.bind(this);
     this.createUser = this.createUser.bind(this);
+    this.createEvent = this.createEvent.bind(this)
   }
 
+  createEvent () {
+    this.setState({
+      appView: 'CreateEvent'
+    })
+  }
   // changes chat view
   changeView(view) {
     this.setState({
@@ -69,8 +77,9 @@ class App extends React.Component {
     this.setState({ menuOpen: !this.state.menuOpen });
   }
 
-  handleLinkClick() {
+  handleLinkClick(link) {
     this.setState({ menuOpen: false });
+    this.setState({appView: link.val})
   }
 
   render() {
@@ -94,6 +103,7 @@ class App extends React.Component {
         margin: '0 auto',
       },
       body: {
+        paddingTop: '65px', 
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -110,7 +120,7 @@ class App extends React.Component {
         <MenuItem
           key={index}
           delay={`${index * 0.1}s`}
-          onClick={() => { this.handleLinkClick(); }}>{val}</MenuItem>)
+          onClick={() => { this.handleLinkClick({val}); }}>{val}</MenuItem>)
 
     }
     );
@@ -126,6 +136,12 @@ class App extends React.Component {
         view = <ChatApp currentId={this.state.currentId} />
     }
 
+    let appView = '';
+    if(this.state.appView === 'Home'){
+      appView = <Home handleClick={this.createEvent} />
+    } else if (this.state.appView === 'CreateEvent'){
+      appView = <CreateEvent />
+    }
     return (
       <div>
         {/* navbar  */}
@@ -133,15 +149,18 @@ class App extends React.Component {
           <MenuButton open={this.state.menuOpen} onClick={() => this.handleMenuClick()} color='white' />
           <div style={styles.logo}>Social Club</div>
         </div>
+        <div>
         <Menu open={this.state.menuOpen}>
           {menuItems}
         </Menu>
-        {/* <MapContainer /> */}
-        <CreateEvent />
-        {/* chatbox */}
-        <div className="Chat">
-          {view}
         </div>
+        {/* <MapContainer /> */}
+        {/* <CreateEvent /> */}
+        {/* chatbox */}
+        {appView}
+        {/* <div className="Chat">
+          {view}
+        </div> */}
       </div>
     );
   }

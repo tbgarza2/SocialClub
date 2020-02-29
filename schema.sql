@@ -19,7 +19,7 @@ CREATE TABLE `events` (
   `location` varchar(50),
   `creator_id` int,
   `summary` varchar(244),
-  `private` boolean
+  `roomID` varchar(20)
 );
 
 CREATE TABLE `status` (

@@ -14,12 +14,14 @@ class MapContainer extends Component {
 
     const styles = {
       map: {
-        margin:'50px'
+        margin:'50px',
+        position: 'absolute',
+        top: '50px'
       }
     }
 
     return (
-      <div ClassName='map'>
+      <div className='map'>
         <Map
           style={styles.map}
           google={this.props.google}
