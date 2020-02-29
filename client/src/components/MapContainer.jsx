@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react';
 import { GOOGLE_TOKEN } from './googleConfig'
 // import Marker from './Marker';
 
@@ -9,11 +9,16 @@ class MapContainer extends Component {
     super(props);
     this.state = {
       events: props.events || [],
-      eventCords: {}
+      eventCords: {},
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {},
     };
 
     this.convertAddress = this.convertAddress.bind(this);
     this.loadCords = this.loadCords.bind(this);
+    this.onMarkerClick = this.onMarkerClick.bind(this);
+    this.onMapClicked = this.onMapClicked.bind(this);
 
     this.loadCords();
   }
@@ -38,9 +43,9 @@ class MapContainer extends Component {
       this.convertAddress(event.address)
         .then((cords) => {
           this.setState(prevState => {
-            let eventCords = Object.assign({}, prevState.eventCords);  // creating copy of state variable jasper
-            eventCords[event.id] = cords;                     // update the name property, assign a new value                 
-            return { eventCords };                                 // return new object jasper object
+            let eventCords = Object.assign({}, prevState.eventCords);
+            eventCords[event.id] = cords;              
+            return { eventCords };
           })
         })
         .catch((err) => {
@@ -48,6 +53,24 @@ class MapContainer extends Component {
         });
     });
   }
+
+  onMarkerClick(props, marker, e) {
+    console.log('clicked')
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: !this.state.showingInfoWindow
+    });
+  }
+
+  onMapClicked(props) {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      })
+    }
+  };
   
   render() {
     const styles = {
@@ -69,8 +92,16 @@ class MapContainer extends Component {
           // style={mapStyles}
           initialCenter={{ lat: 47.444, lng: -122.176}}
           disableDefaultUI={true}
+          onClick={this.onMapClicked}
         >
-          {this.state.events.map(event => <Marker position={eventCords[event.id]}/>)}
+          {this.state.events.map(event => <Marker onClick={this.onMarkerClick} key={event.id}  position={eventCords[event.id]}/>)}
+          <InfoWindow
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}>
+              <div>
+                <h1>INFOWINDOW</h1>
+              </div>
+            </InfoWindow>
         </Map>
       </div>
     );
