@@ -14,6 +14,8 @@ import Signup from './Components/Signup';
 import ChatApp from './Components/ChatApp';
 import UserProfile from './Components/userProfile';
 import GoogleLogin  from "react-google-login"
+import CreateEvent from "./CreateEvent";
+import Home from "./Components/Home"
 
 
 class App extends React.Component {
@@ -29,8 +31,14 @@ class App extends React.Component {
     this.changeView = this.changeView.bind(this);
     this.createUser = this.createUser.bind(this);
     //this.userProfile = this.userProfile.bind(this)
+    this.createEvent = this.createEvent.bind(this)
   }
 
+  createEvent () {
+    this.setState({
+      appView: 'CreateEvent'
+    })
+  }
   // changes chat view
   // userProfile() {
   //   this.setState({
@@ -78,25 +86,22 @@ class App extends React.Component {
     this.setState({ menuOpen: !this.state.menuOpen });
   }
 
-  handleLinkClick() {
+  handleLinkClick(link) {
     this.setState({ menuOpen: false });
+    this.setState({appView: link.val})
   }
   render() {
+    //
     const responseGoogle = (response) => {
       console.log(response)
     }
+    //
     const onSignIn = (googleUser) => {
       console.log(googleUser, "settingstate");
-       
-      this.setState(
-        {
+       this.setState({
         appView: 'UserProfile',
         currentUsername: googleUser.profileObj.name
       })
-    //   if (this.state.currentView === "UserProfile") {
-    //   view = <UserProfile currentUsername={this.state.currentUsername} />
-    // }
-    
     }
     
     //navbar css
@@ -120,6 +125,7 @@ class App extends React.Component {
         margin: '0 auto',
       },
       body: {
+        paddingTop: '65px', 
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -136,8 +142,7 @@ class App extends React.Component {
         <MenuItem
           key={index}
           delay={`${index * 0.1}s`}
-          onClick={() => { this.handleLinkClick(); }}>{val}</MenuItem>)
-          
+          onClick={() => { this.handleLinkClick({val}); }}>{val}</MenuItem>)
 
     }
     );
@@ -157,6 +162,9 @@ class App extends React.Component {
     // }
 
     let appView = '';
+    if (this.state.appView === 'Home') {
+      appView = <Home handleClick={this.createEvent} />
+    } 
     if (this.state.appView === 'UserProfile') {
       appView = <UserProfile></UserProfile>
     }
@@ -191,25 +199,20 @@ class App extends React.Component {
           <MenuButton open={this.state.menuOpen} onClick={() => this.handleMenuClick()} color='white' />
           <div style={styles.logo}>Social Club</div>
         </div>
+        <div>
         <Menu open={this.state.menuOpen}>
           
           {menuItems}
         </Menu>
-        <MapContainer events={[{
-          address: "new york",
-          id: 1,
-        },
-        {
-          address: "252, florida, st, riverridge, louisiana, 70123, united states",
-          id: 2,
-        }]}></MapContainer>
+        </div>
+        {/* <Home /> */}
+        {/* <CreateEvent /> */}
         {/* chatbox */}
         {appView}
-        <div className="Chat">
+        {/* <div className="Chat">
           {view}
-        </div>
-    </div>
-    
+        </div> */}
+      </div>
     );
   }
 }
