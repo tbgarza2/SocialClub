@@ -13,7 +13,7 @@ CREATE TABLE `users` (
 CREATE TABLE `events` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(20),
-  `time` date,
+  `time` varchar(20),
   `category_id` int,
   `category` varchar(20),
   `location` varchar(50),
