@@ -79,21 +79,15 @@ class App extends React.Component {
     }
     const onSignIn = (googleUser) => {
       console.log(googleUser);
-       let views = '';
+       
       this.setState({
         currentView: 'userProfile',
         currentUsername: googleUser.profileObj.name
       })
-      if (this.state.currentView === "userProfile") {
-      views = <userProfile currentUsername={this.state.currentUsername} />
-    }
-      // let profile = googleUser.getBasicProfile();
-      // let id_token = googleUser.getAuthResponse().id_token;
-      // console.log("worked");
-      // $(".g-signin2").css("display", "none");
-      // $(".data").css("display", "block");
-      // $("#pic").attr('src', profile.getImageUrl());
-      // $("#email").text(profile.getEmail());
+    //   if (this.state.currentView === "UserProfile") {
+    //   view = <UserProfile currentUsername={this.state.currentUsername} />
+    // }
+    
     }
     
     //navbar css
@@ -150,7 +144,7 @@ class App extends React.Component {
         view = <ChatApp currentid={this.state.currentId} />
      } 
      else if (this.state.currentView === "userProfile") {
-      view = <UserProfile currentid={this.state.currentUsername} />
+      view = <UserProfile currentUsername={this.state.currentUsername} />
     }
 
       
@@ -188,7 +182,7 @@ class App extends React.Component {
           
           {menuItems}
         </Menu>
-        <MapContainer></MapContainer>
+        {/* <MapContainer></MapContainer> */}
 
         <div className="Chat">
           {view}

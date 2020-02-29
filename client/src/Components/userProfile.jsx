@@ -5,8 +5,21 @@ class UserProfile extends Component {
 
   }
   render (){
+    function onSignIn(googleUser) {
+      let profile = googleUser.getBasicProfile();
+      let id_token = googleUser.getAuthResponse().id_token;
+      console.log("worked");
+      $(".g-signin2").css("display", "none");
+      $(".data").css("display", "block");
+      $("#pic").attr('src', profile.getImageUrl());
+      $("#email").text(profile.getEmail());
+    }
   return (
-    <h2>yuroooo</h2>
+    <div className="Chat">
+      
+        <h2>YOOOOOOOOO</h2>
+        </div>
+  
   )
   }
 }
