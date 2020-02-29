@@ -32,7 +32,7 @@ class App extends React.Component {
    //console.log(googleUser);
     this.changeView = this.changeView.bind(this);
     this.createUser = this.createUser.bind(this);
-    this.signOut = this.signOut.bind(this)
+    //this.signOut = this.signOut.bind(this)
     this.createEvent = this.createEvent.bind(this)
   }
 
@@ -54,14 +54,14 @@ class App extends React.Component {
     })
   }
 
-  signOut() {
-  var auth2 = gapi.auth2.getAuthInstance();
-  auth2.signOut().then(function () {
-    alert("You have been successfully signed out");
-    $(".g-signin2").css("display", "block");
-    $(".data").css("display", "none");
-  })
-}
+//   signOut() {
+//   var auth2 = gapi.auth2.getAuthInstance();
+//   auth2.signOut().then(function () {
+//     alert("You have been successfully signed out");
+//     $(".g-signin2").css("display", "block");
+//     $(".data").css("display", "none");
+//   })
+// }
   //chat sign up
   createUser(username) {
     axios({
@@ -189,14 +189,6 @@ class App extends React.Component {
           cookiePolicy={'single_host_origin'}
         />
           </div>
-
-
-        
-
-  
-      
-        
-       
         <div style={styles.container}>
           <MenuButton open={this.state.menuOpen} onClick={() => this.handleMenuClick()} color='white' />
           <div style={styles.logo}>Social Club</div>

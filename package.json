@@ -44,10 +44,11 @@
     "express": "^4.17.1",
     "file-system": "^2.2.2",
     "google-maps-react": "^2.0.2",
+    "mysql": "^2.18.1",
     "react": "0.0.0-d28bd2994",
     "react-dom": "0.0.0-d28bd2994",
     "react-google-login": "^5.1.1",
-    "mysql": "^2.18.1",
-    "react-hot-loader": "^4.3.11"
+    "react-hot-loader": "^4.3.11",
+    "react-router-dom": "^5.1.2"
   }
 }
