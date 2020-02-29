@@ -16,6 +16,8 @@ import UserProfile from './Components/userProfile';
 import GoogleLogin  from "react-google-login"
 import CreateEvent from "./CreateEvent";
 import Home from "./Components/Home"
+import UserEvents from "./Components/UserEvents";
+import AttendingEvents from "./Components/AttendingEvents";
 
 
 class App extends React.Component {
@@ -173,6 +175,12 @@ class App extends React.Component {
     let appView = '';
     if (this.state.appView === 'Home') {
       appView = <Home handleClick={this.createEvent} />
+    } else if (this.state.appView === 'CreateEvent'){
+      appView = <CreateEvent />
+    } else if (this.state.appView === 'Created Events'){
+      appView = <UserEvents />
+    } else if (this.state.appView === 'RSVP\'d Events') {
+      appView = <AttendingEvents />
     } 
     else if (this.state.appView === 'Profile Page') {
       appView = <UserProfile user = {this.state.googleUser} userName = {this.state.currentUsername}></UserProfile>
