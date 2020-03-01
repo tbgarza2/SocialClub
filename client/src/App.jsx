@@ -18,6 +18,7 @@ import CreateEvent from "./CreateEvent";
 import Home from "./Components/Home"
 import UserEvents from "./Components/UserEvents";
 import AttendingEvents from "./Components/AttendingEvents";
+import EventPage from "./Components/EventPage"
 
 
 class App extends React.Component {
@@ -29,6 +30,7 @@ class App extends React.Component {
       currentUsername: '',
       userId: '',
       userEvents: [],
+      clickedEventId: '',
       currentId: '',
       currentView: 'Signup',
       appView: 'Home',
@@ -42,6 +44,7 @@ class App extends React.Component {
     this.getUserEvents = this.getUserEvents.bind(this);
     this.postUser = this.postUser.bind(this);
     this.getUser = this.getUser.bind(this);
+    this.handleUserEventClick = this.handleUserEventClick.bind(this);
   }
 
   //create event button on click changes appView
@@ -82,21 +85,14 @@ class App extends React.Component {
   }
 
 
-
+//chat view
   changeView(view) {
     this.setState({
       currentView: view
     })
   }
 
-  //   signOut() {
-  //   var auth2 = gapi.auth2.getAuthInstance();
-  //   auth2.signOut().then(function () {
-  //     alert("You have been successfully signed out");
-  //     $(".g-signin2").css("display", "block");
-  //     $(".data").css("display", "none");
-  //   })
-  // }
+
   //chat sign up
   createUser(username) {
     axios({
@@ -136,6 +132,13 @@ class App extends React.Component {
     this.setState({ menuOpen: false });
     this.setState({ appView: link.val })
   }
+
+
+  handleUserEventClick(event) {
+    this.setState({clickedEventId: event.target.id})
+    this.setState({appView: "EventPage"})
+  }
+
   render() {
     //
     const responseGoogle = (response) => {
@@ -207,19 +210,25 @@ class App extends React.Component {
       view = <ChatApp currentid={this.state.currentId} />
     }
 
-
+    //App conditional render
     let appView = '';
     if (this.state.appView === 'Home') {
       appView = <Home handleClick={this.createEvent} />
-    } else if (this.state.appView === 'CreateEvent') {
+    } 
+    else if (this.state.appView === 'CreateEvent') {
       appView = <CreateEvent currentUser={this.state.currentUsername} />
-    } else if (this.state.appView === 'Created Events') {
-      appView = <UserEvents />
-    } else if (this.state.appView === 'RSVP\'d Events') {
+    } 
+    else if (this.state.appView === 'Created Events') {
+      appView = <UserEvents events={this.state.userEvents} handleClick={this.handleUserEventClick} />
+    } 
+    else if (this.state.appView === 'RSVP\'d Events') {
       appView = <AttendingEvents />
     }
     else if (this.state.appView === 'Profile Page') {
       appView = <UserProfile user={this.state.googleUser} userName={this.state.currentUsername}></UserProfile>
+    } 
+    else if (this.state.appView === "EventPage") {
+      appView = <EventPage eventID={this.state.clickedEventId} />
     }
 
     return (

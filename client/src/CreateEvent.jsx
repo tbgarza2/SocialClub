@@ -42,7 +42,7 @@ class CreateEvent extends React.Component {
             url: 'api/chatkit/rooms',
             data: {
                 id: name,
-                creatorId: currentUser,
+                creatorId: this.props.currentUser,
                 name: name,
             }
     })
