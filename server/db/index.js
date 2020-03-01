@@ -27,9 +27,14 @@ const addUser = (req, res) => {
     query(`INSERT IGNORE INTO users (name, email) VALUES ("${username}", "${email}")`)
     .then(res => console.log(res))
 }
+
+const getAllEvents = (req, res) => {
+    return query('SELECT * FROM events')
+}
  
 module.exports = {
     saveEvent,
     getCreatedEvents,
     addUser,
+    getAllEvents,
 }

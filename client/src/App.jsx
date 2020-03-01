@@ -29,7 +29,8 @@ class App extends React.Component {
       currentUsername: '',
       currentId: '',
       currentView: 'Signup',
-      appView: 'Home'
+      appView: 'Home',
+      events: [],
     }
    //console.log(googleUser);
     this.changeView = this.changeView.bind(this);
@@ -195,7 +196,7 @@ class App extends React.Component {
 
     let appView = '';
     if (this.state.appView === 'Home') {
-      appView = <Home handleClick={this.createEvent} />
+      appView = <Home events={this.state.events} handleClick={this.createEvent} />
     } else if (this.state.appView === 'CreateEvent'){
       appView = <CreateEvent currentUser={this.state.currentUsername} />
     } else if (this.state.appView === 'Created Events'){
