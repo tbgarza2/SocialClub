@@ -19,6 +19,8 @@ class MapContainer extends Component {
     this.loadCords = this.loadCords.bind(this);
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClicked = this.onMapClicked.bind(this);
+    this.handleJoinClick = this.handleJoinClick.bind(this);
+    this.handleViewClick = this.handleViewClick.bind(this);
 
     this.loadCords();
   }
@@ -70,6 +72,29 @@ class MapContainer extends Component {
       })
     }
   };
+
+  handleJoinClick() {
+    console.log("JOIN")
+  }
+
+  handleViewClick() {
+    console.log("View")
+  }
+
+  onInfoWindowOpen(props, e) {
+    const { selectedPlace } = this.state;
+    const infoWindow = (
+      <div>
+        <h3>{selectedPlace.name}</h3>
+        <p>Address: {selectedPlace.address}</p>
+        <p>Time: {selectedPlace.time}</p>
+        <p>Category: {selectedPlace.category}</p>
+        <p>Summary: {selectedPlace.summary}</p>
+        <button onClick={this.handleJoinClick}>JOIN</button>
+        <button onClick={this.handleViewClick}>VIEW EVENT</button>
+      </div>);
+    ReactDOM.render(React.Children.only(infoWindow), document.getElementById("iwc"));
+  }
   
   render() {
     const styles = {
@@ -80,7 +105,7 @@ class MapContainer extends Component {
       }
     }
     const { google } = this.props
-    const { eventCords, activeMarker, showingInfoWindow, selectedPlace } = this.state;
+    const { eventCords, activeMarker, showingInfoWindow } = this.state;
     return (
       <div className='map'>
         <Map
@@ -97,13 +122,9 @@ class MapContainer extends Component {
           {this.state.events.map(event => <Marker address={event.address} time={event.time} category={event.category} summary={event.summary} name={event.name} onClick={this.onMarkerClick} key={event.id} position={eventCords[event.id]}/>)}
           <InfoWindow
               marker={activeMarker}
-              visible={showingInfoWindow}>
-              <div>
-                <h3>{selectedPlace.name}</h3>
-                <p>Address: {selectedPlace.address}</p>
-                <p>Time: {selectedPlace.time}</p>
-                <p>Category: {selectedPlace.category}</p>
-                <p>Summary: {selectedPlace.summary}</p>
+              visible={showingInfoWindow}
+              onOpen={e => {this.onInfoWindowOpen(this.props, e)}}>
+              <div id="iwc">
               </div>
             </InfoWindow>
         </Map>
