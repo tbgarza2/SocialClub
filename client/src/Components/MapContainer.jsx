@@ -55,7 +55,6 @@ class MapContainer extends Component {
   }
 
   onMarkerClick(props, marker, e) {
-    console.log('clicked')
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -80,12 +79,13 @@ class MapContainer extends Component {
         top: '50px'
       }
     }
-    const { eventCords } = this.state;
+    const { google } = this.props
+    const { eventCords, activeMarker, showingInfoWindow, selectedPlace } = this.state;
     return (
       <div className='map'>
         <Map
           style={styles.map}
-          google={this.props.google}
+          google={google}
           zoom={8}
           minZoom={2}
           maxZoom={15}
@@ -94,12 +94,16 @@ class MapContainer extends Component {
           disableDefaultUI={true}
           onClick={this.onMapClicked}
         >
-          {this.state.events.map(event => <Marker onClick={this.onMarkerClick} key={event.id}  position={eventCords[event.id]}/>)}
+          {this.state.events.map(event => <Marker address={event.address} time={event.time} category={event.category} summary={event.summary} name={event.name} onClick={this.onMarkerClick} key={event.id} position={eventCords[event.id]}/>)}
           <InfoWindow
-              marker={this.state.activeMarker}
-              visible={this.state.showingInfoWindow}>
+              marker={activeMarker}
+              visible={showingInfoWindow}>
               <div>
-                <h1>INFOWINDOW</h1>
+                <h3>{selectedPlace.name}</h3>
+                <p>Address: {selectedPlace.address}</p>
+                <p>Time: {selectedPlace.time}</p>
+                <p>Category: {selectedPlace.category}</p>
+                <p>Summary: {selectedPlace.summary}</p>
               </div>
             </InfoWindow>
         </Map>
