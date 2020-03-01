@@ -31,7 +31,8 @@ class App extends React.Component {
       userEvents: [],
       currentId: '',
       currentView: 'Signup',
-      appView: 'Home'
+      appView: 'Home',
+      events: [],
     }
     //console.log(googleUser);
     this.changeView = this.changeView.bind(this);
