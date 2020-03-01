@@ -48,12 +48,13 @@ class App extends React.Component {
   }
 
   postUser () {
-    debugger;
+
     axios({
       method: 'post',
       url: `api/db/users/`,
       data: {
-        name: this.state.currentUsername,
+        username: this.state.currentUsername,
+        email: this.state.googleUser.profileObj.email
       }
   })
 }
@@ -196,7 +197,7 @@ class App extends React.Component {
     if (this.state.appView === 'Home') {
       appView = <Home handleClick={this.createEvent} />
     } else if (this.state.appView === 'CreateEvent'){
-      appView = <CreateEvent />
+      appView = <CreateEvent currentUser={this.state.currentUsername} />
     } else if (this.state.appView === 'Created Events'){
       appView = <UserEvents />
     } else if (this.state.appView === 'RSVP\'d Events') {

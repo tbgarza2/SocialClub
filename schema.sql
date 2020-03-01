@@ -8,7 +8,8 @@ USE socialclub;
 
 CREATE TABLE `users` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(20)
+  `name` varchar(20) ,
+  `email` varchar(40) UNIQUE
 ); 
 
 CREATE TABLE `events` (

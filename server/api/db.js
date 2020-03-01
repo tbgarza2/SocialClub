@@ -18,7 +18,7 @@ dbRouter.get('/users', (req,res) =>{
 });
 
 dbRouter.post('/users', (req,res) =>{
-    addUser(req.body.name)
+    addUser(req.body)
 });
 
 module.exports = {
