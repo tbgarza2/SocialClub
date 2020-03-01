@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Map, GoogleApiWrapper, Marker, InfoWindow} from 'google-maps-react';
 import { GOOGLE_TOKEN } from './googleConfig'
-import axios from 'axios'
 
 // import Marker from './Marker';
 
@@ -10,7 +9,7 @@ class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: [],
+      events: this.props.events || [],
       eventCords: {},
       showingInfoWindow: false,
       activeMarker: {},
@@ -23,21 +22,10 @@ class MapContainer extends Component {
     this.onMapClicked = this.onMapClicked.bind(this);
     this.handleJoinClick = this.handleJoinClick.bind(this);
     this.handleViewClick = this.handleViewClick.bind(this);
-    this.getAllEvents = this.getAllEvents.bind(this);
   }
 
   componentDidMount() {
-    this.getAllEvents();
     this.loadCords();
-  }
-
-  getAllEvents() {
-    axios.get('api/db/events')
-      .then((events) => {
-        this.setState({
-          events: events.data,
-        })
-      })
   }
 
   convertAddress(address) {

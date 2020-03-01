@@ -1,20 +1,23 @@
 const { Router } = require('express');
 const dbRouter = Router();
-const { saveEvent, getCreatedEvents, addUser, getAllEvents } =require('../db/index.js')
+const { saveEvent, getCreatedEvents, addUser, selectUser, getAllEvents} =require('../db/index.js')
+
 
 
 dbRouter.post('/events', (req,res) =>{
-    console.log(req)
 saveEvent(req.body)
 })
 
-dbRouter.get(`/events/:name`, (req,res) => {
-    console.log(req.params)
-getCreatedEvents(req.params.name)
+dbRouter.get(`/events/:id`, (req,res) => {
+getCreatedEvents(req.params.id)
+.then(data => {
+    console.log(data)
+    res.send(data)})
 })
 
-dbRouter.get('/users', (req,res) =>{
-
+dbRouter.get('/users/:email', (req , res) =>{
+    selectUser(req.params.email, res)
+    .then(data => res.send(data))
 });
 
 dbRouter.post('/users', (req,res) =>{
