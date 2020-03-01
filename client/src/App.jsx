@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 //import { hot } from "react-hot-loader";
-import MapContainer from "./components/MapContainer"
+import MapContainer from "./Components/MapContainer"
 import axios from 'axios'
 import  { onSignIn } from "../dist/script"
 //Topbar Menu imports
