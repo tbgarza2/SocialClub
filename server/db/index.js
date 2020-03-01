@@ -31,6 +31,11 @@ const selectUser = (req, res) => {
 const getAllEvents = (req, res) => {
     return query('SELECT * FROM events')
 }
+
+const getEventPage = (req, res) => {
+    const id = req
+    return query(`SELECT * FROM events WHERE id=${id}`)
+}
  
 module.exports = {
     saveEvent,
@@ -38,4 +43,5 @@ module.exports = {
     addUser,
     getAllEvents,
     selectUser,
+    getEventPage,
 }
