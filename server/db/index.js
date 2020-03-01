@@ -16,7 +16,6 @@ const saveEvent = (req, res) => {
 const getCreatedEvents = (req, res) => {
     const name = req
     query()
-    .then( res => console.log(res))
 }
 
 const addUser = (req, res) => {
@@ -26,8 +25,7 @@ const addUser = (req, res) => {
 
 const selectUser = (req, res) => {
     const userEmail= req
-    query(`SELECT id FROM users WHERE email="${userEmail}"`)
-    .then(idArr => res.send(idArr))
+    return query(`SELECT id FROM users WHERE email="${userEmail}"`)
 }
  
 module.exports = {
