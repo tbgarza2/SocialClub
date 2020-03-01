@@ -7,8 +7,11 @@ dbRouter.post('/events', (req,res) =>{
 saveEvent(req.body)
 })
 
-dbRouter.get(`/events/:name`, (req,res) => {
-getCreatedEvents(req.params.name)
+dbRouter.get(`/events/:id`, (req,res) => {
+getCreatedEvents(req.params.id)
+.then(data => {
+    console.log(data)
+    res.send(data)})
 })
 
 dbRouter.get('/users/:email', (req , res) =>{

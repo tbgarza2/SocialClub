@@ -14,8 +14,8 @@ const saveEvent = (req, res) => {
 }
 
 const getCreatedEvents = (req, res) => {
-    const name = req
-    query()
+    const  id = req
+    return query(`SELECT * FROM events WHERE creator_id=${id}`)
 }
 
 const addUser = (req, res) => {

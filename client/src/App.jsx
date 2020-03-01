@@ -24,10 +24,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: '',
       googleUser: [],
       menuOpen: false,
       currentUsername: '',
+      userId: '',
+      userEvents: [],
       currentId: '',
       currentView: 'Signup',
       appView: 'Home'
@@ -66,14 +67,17 @@ class App extends React.Component {
       method: 'get',
       url: `api/db/users/${this.state.googleUser.profileObj.email}`,
     })
-    .then( res => console.log(res))
+    .then( res => this.setState({userId: res.data[0].id}) )
   }
 
   getUserEvents() {
     axios({
       method: 'get',
-      url: `api/db/events/${this.state.currentUsername}`,
-    }).then()
+      url: `api/db/events/${this.state.userId}`,
+    }).then(res =>{
+      console.log(res.data) 
+      this.setState({userEvents: res.data})
+    })
   }
 
 
@@ -146,7 +150,7 @@ class App extends React.Component {
       })
       this.postUser()
       this.getUser()
-      // this.getUserEvents()
+      this.getUserEvents()
     }
 
     //navbar css
