@@ -152,9 +152,6 @@ class App extends React.Component {
         currentUsername: googleUser.profileObj.name,
         googleUser: googleUser
       })
-      this.postUser()
-      this.getUser()
-      this.getUserEvents()
     }
 
     //navbar css
@@ -225,7 +222,7 @@ class App extends React.Component {
       appView = <AttendingEvents />
     }
     else if (this.state.appView === 'Profile Page') {
-      appView = <UserProfile user={this.state.googleUser} userName={this.state.currentUsername}></UserProfile>
+      appView = <UserProfile user={this.state.googleUser} userName={this.state.currentUsername} postUser={this.postUser} getUser={this.getUser} getUserEvents={this.getUserEvents}></UserProfile>
     } 
     else if (this.state.appView === "EventPage") {
       appView = <EventPage eventID={this.state.clickedEventId} />

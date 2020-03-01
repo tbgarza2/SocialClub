@@ -22,7 +22,7 @@ class EventPage extends Component {
 
         return (
             <div>
-                <p>Hello world</p>
+                <p>{this.state.eventData.name}</p>
             </div>
         )
     }
