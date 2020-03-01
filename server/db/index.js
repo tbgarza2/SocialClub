@@ -13,6 +13,23 @@ const saveEvent = (req, res) => {
     })
 }
 
+const getCreatedEvents = (req, res) => {
+    const name = req
+    query(`SELECT name, time, category, location, summary, roomID, creator_id, name, id
+        FROM events, users
+        INNER JOIN events.creator_id ON users.id
+        WHERE name="test";`)
+    .then( res => console.log(res))
+}
+
+const addUser = (req, res) => {
+    const username = req
+    query(`INSERT IGNORE INTO users (name) VALUES ("${username}")`)
+    .then(res => console.log(res))
+}
+ 
 module.exports = {
-    saveEvent
+    saveEvent,
+    getCreatedEvents,
+    addUser,
 }

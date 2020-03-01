@@ -7,7 +7,8 @@ CREATE DATABASE socialclub;
 USE socialclub;
 
 CREATE TABLE `users` (
-  `id` int PRIMARY KEY AUTO_INCREMENT
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(20)
 ); 
 
 CREATE TABLE `events` (

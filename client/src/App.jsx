@@ -36,19 +36,37 @@ class App extends React.Component {
     this.createUser = this.createUser.bind(this);
     //this.signOut = this.signOut.bind(this)
     this.createEvent = this.createEvent.bind(this)
+    this.getUserEvents = this.getUserEvents.bind(this);
+    this.postUser = this.postUser.bind(this);
   }
 
+//create event button on click changes appView
   createEvent () {
     this.setState({
       appView: 'CreateEvent'
     })
   }
-  // changes chat view
-  // userProfile() {
-  //   this.setState({
-  //     appView: 'UserProfile'
-  //   })
-  // }
+
+  postUser () {
+    debugger;
+    axios({
+      method: 'post',
+      url: `api/db/users/`,
+      data: {
+        name: this.state.currentUsername,
+      }
+  })
+}
+
+  getUserEvents () {
+    console.log('getEvents')
+    axios({
+      method: 'get',
+      url: `api/db/events/${this.state.currentUsername}`,
+    }).then()
+  }
+
+
 
   changeView(view) {
     this.setState({
@@ -111,11 +129,13 @@ class App extends React.Component {
     //
     const onSignIn = (googleUser) => {
       console.log(googleUser, "settingstate");
-       this.setState({
-         appView: 'Profile Page',
+      this.setState({
+        appView: 'Profile Page',
         currentUsername: googleUser.profileObj.name,
         googleUser: googleUser
       })
+      this.postUser()
+      // this.getUserEvents()
     }
     
     //navbar css
