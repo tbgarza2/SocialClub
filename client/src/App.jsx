@@ -3,7 +3,7 @@ import "./App.css";
 //import { hot } from "react-hot-loader";
 import MapContainer from "./components/MapContainer"
 import axios from 'axios'
-import  { onSignIn } from "../dist/script"
+import { onSignIn } from "../dist/script"
 //Topbar Menu imports
 import MenuItem from "./MenuItem"
 import Menu from './Menu'
@@ -13,7 +13,7 @@ import ChatMessage from './Components/ChatMessage';
 import Signup from './Components/Signup';
 import ChatApp from './Components/ChatApp';
 import UserProfile from './Components/userProfile';
-import GoogleLogin  from "react-google-login"
+import GoogleLogin from "react-google-login"
 import CreateEvent from "./CreateEvent";
 import Home from "./Components/Home"
 import UserEvents from "./Components/UserEvents";
@@ -24,6 +24,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: '',
       googleUser: [],
       menuOpen: false,
       currentUsername: '',
@@ -31,23 +32,24 @@ class App extends React.Component {
       currentView: 'Signup',
       appView: 'Home'
     }
-   //console.log(googleUser);
+    //console.log(googleUser);
     this.changeView = this.changeView.bind(this);
     this.createUser = this.createUser.bind(this);
     //this.signOut = this.signOut.bind(this)
     this.createEvent = this.createEvent.bind(this)
     this.getUserEvents = this.getUserEvents.bind(this);
     this.postUser = this.postUser.bind(this);
+    this.getUser = this.getUser.bind(this);
   }
 
-//create event button on click changes appView
-  createEvent () {
+  //create event button on click changes appView
+  createEvent() {
     this.setState({
       appView: 'CreateEvent'
     })
   }
 
-  postUser () {
+  postUser() {
 
     axios({
       method: 'post',
@@ -56,11 +58,18 @@ class App extends React.Component {
         username: this.state.currentUsername,
         email: this.state.googleUser.profileObj.email
       }
-  })
-}
+    })
+  }
 
-  getUserEvents () {
-    console.log('getEvents')
+  getUser() {
+    axios({
+      method: 'get',
+      url: `api/db/users/${this.state.googleUser.profileObj.email}`,
+    })
+    .then( res => console.log(res))
+  }
+
+  getUserEvents() {
     axios({
       method: 'get',
       url: `api/db/events/${this.state.currentUsername}`,
@@ -75,14 +84,14 @@ class App extends React.Component {
     })
   }
 
-//   signOut() {
-//   var auth2 = gapi.auth2.getAuthInstance();
-//   auth2.signOut().then(function () {
-//     alert("You have been successfully signed out");
-//     $(".g-signin2").css("display", "block");
-//     $(".data").css("display", "none");
-//   })
-// }
+  //   signOut() {
+  //   var auth2 = gapi.auth2.getAuthInstance();
+  //   auth2.signOut().then(function () {
+  //     alert("You have been successfully signed out");
+  //     $(".g-signin2").css("display", "block");
+  //     $(".data").css("display", "none");
+  //   })
+  // }
   //chat sign up
   createUser(username) {
     axios({
@@ -93,25 +102,25 @@ class App extends React.Component {
         name: username,
       }
     })
-    .then((res) => {
-      console.log(res.data.id)
-      this.setState({
-        currentUsername: res.data.name,
-        currentId: res.data.id,
-        currentView: 'chatApp'
-      })
-    }).catch((err) => {
-      console.log(err)
-      if (err.status === 400) {
+      .then((res) => {
+        console.log(res.data.id)
         this.setState({
-          currentUsername: username,
-          currentId: username,
+          currentUsername: res.data.name,
+          currentId: res.data.id,
           currentView: 'chatApp'
         })
-      } else {
-        console.log(err.status);
-      }
-    });
+      }).catch((err) => {
+        console.log(err)
+        if (err.status === 400) {
+          this.setState({
+            currentUsername: username,
+            currentId: username,
+            currentView: 'chatApp'
+          })
+        } else {
+          console.log(err.status);
+        }
+      });
   }
   //Menu handler
   handleMenuClick() {
@@ -120,7 +129,7 @@ class App extends React.Component {
 
   handleLinkClick(link) {
     this.setState({ menuOpen: false });
-    this.setState({appView: link.val})
+    this.setState({ appView: link.val })
   }
   render() {
     //
@@ -136,9 +145,10 @@ class App extends React.Component {
         googleUser: googleUser
       })
       this.postUser()
+      this.getUser()
       // this.getUserEvents()
     }
-    
+
     //navbar css
     const styles =
     {
@@ -159,7 +169,7 @@ class App extends React.Component {
         margin: '0 auto',
       },
       body: {
-        paddingTop: '65px', 
+        paddingTop: '65px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -176,57 +186,57 @@ class App extends React.Component {
         <MenuItem
           key={index}
           delay={`${index * 0.1}s`}
-          onClick={() => { this.handleLinkClick({val}); }}>{val}</MenuItem>)
+          onClick={() => { this.handleLinkClick({ val }); }}>{val}</MenuItem>)
 
     }
     );
 
     //chatbox condition render
-    let view ='';
-    
+    let view = '';
+
     if (this.state.currentView === "ChatMessage") {
-        view = <ChatMessage  changeView={this.changeView}/>
+      view = <ChatMessage changeView={this.changeView} />
     } else if (this.state.currentView === "Signup") {
-        view = <Signup onSubmit={this.createUser}/>
+      view = <Signup onSubmit={this.createUser} />
     } else if (this.state.currentView === "chatApp") {
-        view = <ChatApp currentid={this.state.currentId} />
-     } 
-    
+      view = <ChatApp currentid={this.state.currentId} />
+    }
+
 
     let appView = '';
     if (this.state.appView === 'Home') {
       appView = <Home handleClick={this.createEvent} />
-    } else if (this.state.appView === 'CreateEvent'){
+    } else if (this.state.appView === 'CreateEvent') {
       appView = <CreateEvent currentUser={this.state.currentUsername} />
-    } else if (this.state.appView === 'Created Events'){
+    } else if (this.state.appView === 'Created Events') {
       appView = <UserEvents />
     } else if (this.state.appView === 'RSVP\'d Events') {
       appView = <AttendingEvents />
-    } 
-    else if (this.state.appView === 'Profile Page') {
-      appView = <UserProfile user = {this.state.googleUser} userName = {this.state.currentUsername}></UserProfile>
     }
-      
+    else if (this.state.appView === 'Profile Page') {
+      appView = <UserProfile user={this.state.googleUser} userName={this.state.currentUsername}></UserProfile>
+    }
+
     return (
       <div>
         <div className="g-signin2">
-        <GoogleLogin
-          clientId="870155244088-hav8sg0oo71s181ghhetvqdgrssuo8ln.apps.googleusercontent.com"
-          buttonText="Login"
-          onSuccess={onSignIn}
-          onFailure={responseGoogle}
-          cookiePolicy={'single_host_origin'}
-        />
-          </div>
+          <GoogleLogin
+            clientId="870155244088-hav8sg0oo71s181ghhetvqdgrssuo8ln.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={onSignIn}
+            onFailure={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+          />
+        </div>
         <div style={styles.container}>
           <MenuButton open={this.state.menuOpen} onClick={() => this.handleMenuClick()} color='white' />
           <div style={styles.logo}>Social Club</div>
         </div>
         <div>
-        <Menu open={this.state.menuOpen}>
-          
-          {menuItems}
-        </Menu>
+          <Menu open={this.state.menuOpen}>
+
+            {menuItems}
+          </Menu>
         </div>
         {appView}
       </div>

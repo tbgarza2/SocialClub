@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const dbRouter = Router();
-const { saveEvent, getCreatedEvents, addUser } =require('../db/index.js')
+const { saveEvent, getCreatedEvents, addUser, selectUser } =require('../db/index.js')
 
 
 dbRouter.post('/events', (req,res) =>{
@@ -13,8 +13,8 @@ dbRouter.get(`/events/:name`, (req,res) => {
 getCreatedEvents(req.params.name)
 })
 
-dbRouter.get('/users', (req,res) =>{
-
+dbRouter.get('/users/:email', (req , res) =>{
+    selectUser(req.params.email, res)
 });
 
 dbRouter.post('/users', (req,res) =>{

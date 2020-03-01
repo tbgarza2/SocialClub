@@ -36,8 +36,8 @@ CREATE TABLE `rsvp_status` (
 );
 
 CREATE TABLE `categories` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `category` varchar(20)
+  `category` varchar(20),
+  `id` int PRIMARY KEY AUTO_INCREMENT
 );
 
 
