@@ -111,7 +111,7 @@ class MapContainer extends Component {
         <Map
           style={styles.map}
           google={google}
-          zoom={8}
+          zoom={10}
           minZoom={2}
           maxZoom={15}
           // style={mapStyles}
