@@ -39,7 +39,7 @@ dbRouter.get('/events', (req,res) =>{
         })
 });
 
-dbRouter.get('/events/:id', (req,res) =>{
+dbRouter.get('/events/page/:id', (req,res) =>{
     getEventPage(req.params.id)
     .then(data => 
         res.send(data))
