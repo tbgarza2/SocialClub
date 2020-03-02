@@ -8,10 +8,7 @@ import { onSignIn } from "../dist/script"
 import MenuItem from "./MenuItem"
 import Menu from './Menu'
 import MenuButton from './MenuButton'
-//Chatkit
-import ChatMessage from './Components/ChatMessage';
-import Signup from './Components/Signup';
-import ChatApp from './Components/ChatApp';
+
 import UserProfile from './Components/userProfile';
 import GoogleLogin from "react-google-login"
 import CreateEvent from "./CreateEvent";
@@ -36,10 +33,6 @@ class App extends React.Component {
       appView: 'Home',
       events: [],
     }
-    //console.log(googleUser);
-    this.changeView = this.changeView.bind(this);
-    this.createUser = this.createUser.bind(this);
-    //this.signOut = this.signOut.bind(this)
     this.createEvent = this.createEvent.bind(this)
     this.getUserEvents = this.getUserEvents.bind(this);
     this.postUser = this.postUser.bind(this);
@@ -83,8 +76,7 @@ class App extends React.Component {
       this.setState({userEvents: res.data})
     })
   }
-
-
+  
 //chat view
   changeView(view) {
     this.setState({
@@ -196,16 +188,6 @@ class App extends React.Component {
     }
     );
 
-    //chatbox condition render
-    let view = '';
-
-    if (this.state.currentView === "ChatMessage") {
-      view = <ChatMessage changeView={this.changeView} />
-    } else if (this.state.currentView === "Signup") {
-      view = <Signup onSubmit={this.createUser} />
-    } else if (this.state.currentView === "chatApp") {
-      view = <ChatApp currentid={this.state.currentId} />
-    }
 
     //App conditional render
     let appView = '';
@@ -225,7 +207,7 @@ class App extends React.Component {
       appView = <UserProfile user={this.state.googleUser} userName={this.state.currentUsername} postUser={this.postUser} getUser={this.getUser} getUserEvents={this.getUserEvents}></UserProfile>
     } 
     else if (this.state.appView === "EventPage") {
-      appView = <EventPage eventID={this.state.clickedEventId} />
+      appView = <EventPage eventID={this.state.clickedEventId} googleUser={this.state.googleUser}/>
     }
 
     return (
