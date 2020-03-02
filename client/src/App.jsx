@@ -76,7 +76,6 @@ class App extends React.Component {
       this.setState({userEvents: res.data})
     })
   }
-  
 //chat view
   changeView(view) {
     this.setState({

@@ -25,7 +25,6 @@ class EventPage extends Component {
             url: `api/db/events/page/${this.props.eventID}`,
         })
             .then(res => {
-                debugger;
                 this.setState({ eventData: res.data[0] })
             })
 
