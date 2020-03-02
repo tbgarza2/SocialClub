@@ -36,6 +36,13 @@ const getEventPage = (req, res) => {
     const id = req
     return query(`SELECT * FROM events WHERE id=${id}`)
 }
+
+const rsvp = (req, res) => {
+    console.log(req);
+    const eventId = req.eventId;
+    const userId = req.userId;
+    return query(`INSERT INTO rsvp (user_id, event_id) VALUES (${userId}, ${eventId})`);
+}
  
 module.exports = {
     saveEvent,
@@ -44,4 +51,5 @@ module.exports = {
     getAllEvents,
     selectUser,
     getEventPage,
+    rsvp,
 }

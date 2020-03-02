@@ -13,10 +13,10 @@ class Home extends Component {
               top: '50px'
             }
           }
-          const { events } = this.props;
+          const { userid } = this.props;
         return (
             <div>
-            <MapContainer />
+            <MapContainer userid={userid}/>
             <button type="button" className="btn btn-primary" type="button" style={styles.button} onClick={this.props.handleClick}>Create an event!</button>
             </div>
         )
