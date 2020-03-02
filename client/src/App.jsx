@@ -8,10 +8,7 @@ import { onSignIn } from "../dist/script"
 import MenuItem from "./MenuItem"
 import Menu from './Menu'
 import MenuButton from './MenuButton'
-//Chatkit
-import ChatMessage from './Components/ChatMessage';
-import Signup from './Components/Signup';
-import ChatApp from './Components/ChatApp';
+
 import UserProfile from './Components/userProfile';
 import GoogleLogin from "react-google-login"
 import CreateEvent from "./CreateEvent";
@@ -36,10 +33,6 @@ class App extends React.Component {
       appView: 'Home',
       events: [],
     }
-    //console.log(googleUser);
-    this.changeView = this.changeView.bind(this);
-    this.createUser = this.createUser.bind(this);
-    //this.signOut = this.signOut.bind(this)
     this.createEvent = this.createEvent.bind(this)
     this.getUserEvents = this.getUserEvents.bind(this);
     this.postUser = this.postUser.bind(this);
@@ -84,44 +77,6 @@ class App extends React.Component {
     })
   }
 
-
-//chat view
-  changeView(view) {
-    this.setState({
-      currentView: view
-    })
-  }
-
-  //chat sign up
-  createUser(username) {
-    axios({
-      method: 'post',
-      url: 'api/chatkit/users',
-      data: {
-        id: username,
-        name: username,
-      }
-    })
-      .then((res) => {
-        console.log(res.data.id)
-        this.setState({
-          currentUsername: res.data.name,
-          currentId: res.data.id,
-          currentView: 'chatApp'
-        })
-      }).catch((err) => {
-        console.log(err)
-        if (err.status === 400) {
-          this.setState({
-            currentUsername: username,
-            currentId: username,
-            currentView: 'chatApp'
-          })
-        } else {
-          console.log(err.status);
-        }
-      });
-  }
   //Menu handler
   handleMenuClick() {
     this.setState({ menuOpen: !this.state.menuOpen });
@@ -195,16 +150,6 @@ class App extends React.Component {
     }
     );
 
-    //chatbox condition render
-    let view = '';
-
-    if (this.state.currentView === "ChatMessage") {
-      view = <ChatMessage changeView={this.changeView} />
-    } else if (this.state.currentView === "Signup") {
-      view = <Signup onSubmit={this.createUser} />
-    } else if (this.state.currentView === "chatApp") {
-      view = <ChatApp currentid={this.state.currentId} />
-    }
 
     //App conditional render
     let appView = '';
@@ -224,7 +169,7 @@ class App extends React.Component {
       appView = <UserProfile user={this.state.googleUser} userName={this.state.currentUsername} postUser={this.postUser} getUser={this.getUser} getUserEvents={this.getUserEvents}></UserProfile>
     } 
     else if (this.state.appView === "EventPage") {
-      appView = <EventPage eventID={this.state.clickedEventId} />
+      appView = <EventPage eventID={this.state.clickedEventId} googleUser={this.state.googleUser}/>
     }
 
     return (
