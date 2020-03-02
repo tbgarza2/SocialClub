@@ -1,6 +1,14 @@
 const { Router } = require('express');
 const dbRouter = Router();
-const { saveEvent, getCreatedEvents, addUser, selectUser, getAllEvents, getEventPage} =require('../db/index.js')
+const { 
+        saveEvent,
+        getCreatedEvents,
+        addUser,
+        selectUser,
+        getAllEvents,
+        getEventPage,
+        rsvp,
+    } = require('../db/index.js')
 
 
 
@@ -29,13 +37,23 @@ dbRouter.get('/events', (req,res) =>{
         .then((events) => {
             res.send(events);
         })
-})
+});
 
 dbRouter.get('/events/:id', (req,res) =>{
     getEventPage(req.params.id)
     .then(data => 
         res.send(data))
-})
+});
+
+dbRouter.post('/rsvp', (req, res) =>{
+    rsvp(req.body)
+        .then(() => {
+            res.send(true);
+        })
+        .catch(() => {
+            res.send(false);
+        });
+});
 
 module.exports = {
     dbRouter
