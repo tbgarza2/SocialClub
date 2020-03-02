@@ -23,7 +23,7 @@ class EventPage extends Component {
         return (
             <div>
                 <p>{this.state.eventData.name}</p>
-                <p>Location:{this.state.eventData.location}</p>
+                <p>Location:{this.state.eventData.address}</p>
                 <p>Time: {this.state.eventData.time}</p>
                 <p>Category: {this.state.eventData.category}</p>
                 <p>Summary: {this.state.eventData.summary}</p>
