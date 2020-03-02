@@ -122,6 +122,7 @@ class App extends React.Component {
         }
       });
   }
+
   //Menu handler
   handleMenuClick() {
     this.setState({ menuOpen: !this.state.menuOpen });
@@ -209,7 +210,7 @@ class App extends React.Component {
     //App conditional render
     let appView = '';
     if (this.state.appView === 'Home') {
-      appView = <Home userid={this.state.userId} handleClick={this.createEvent} />
+      appView = <Home viewSummary={this.handleUserEventClick} userid={this.state.userId} handleClick={this.createEvent} />
     } 
     else if (this.state.appView === 'CreateEvent') {
       appView = <CreateEvent currentUser={this.state.currentUsername} />

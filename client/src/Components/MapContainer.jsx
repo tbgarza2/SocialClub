@@ -98,12 +98,12 @@ class MapContainer extends Component {
     })
   }
 
-  handleViewClick() {
-    console.log("View")
+  handleViewClick(eventId) {
+    this.props.viewSummary(eventId);
   }
 
   onInfoWindowOpen(props, e) {
-    const { selectedPlace } = this.state;
+    const { selectedPlace, activeMarker } = this.state;
     const infoWindow = (
       <div>
         <h3>{selectedPlace.name}</h3>
@@ -112,7 +112,7 @@ class MapContainer extends Component {
         <p>Category: {selectedPlace.category}</p>
         <p>Summary: {selectedPlace.summary}</p>
         <button onClick={this.handleJoinClick}>JOIN</button>
-        <button onClick={this.handleViewClick}>VIEW EVENT</button>
+        <button onClick={() => {this.handleViewClick({target:{id: activeMarker.id}})}}>VIEW EVENT</button>
       </div>);
     ReactDOM.render(React.Children.only(infoWindow), document.getElementById("iwc"));
   }
