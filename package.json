@@ -6,9 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "babel --presets es2015 src/main.js -o build/main.bundle.js",
-    "start:client": "webpack-dev-server --mode development --watch",
-    "build": "webpack --mode development",
-    "start:server": "node server/index.js",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch",
     "start": "node server/index.js"
   },
   "repository": {
