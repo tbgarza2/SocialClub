@@ -76,6 +76,43 @@ class App extends React.Component {
       this.setState({userEvents: res.data})
     })
   }
+//chat view
+  changeView(view) {
+    this.setState({
+      currentView: view
+    })
+  }
+
+  //chat sign up
+  createUser(username) {
+    axios({
+      method: 'post',
+      url: 'api/chatkit/users',
+      data: {
+        id: username,
+        name: username,
+      }
+    })
+      .then((res) => {
+        console.log(res.data.id)
+        this.setState({
+          currentUsername: res.data.name,
+          currentId: res.data.id,
+          currentView: 'chatApp'
+        })
+      }).catch((err) => {
+        console.log(err)
+        if (err.status === 400) {
+          this.setState({
+            currentUsername: username,
+            currentId: username,
+            currentView: 'chatApp'
+          })
+        } else {
+          console.log(err.status);
+        }
+      });
+  }
 
   //Menu handler
   handleMenuClick() {
@@ -154,7 +191,7 @@ class App extends React.Component {
     //App conditional render
     let appView = '';
     if (this.state.appView === 'Home') {
-      appView = <Home userid={this.state.userId} handleClick={this.createEvent} />
+      appView = <Home viewSummary={this.handleUserEventClick} userid={this.state.userId} handleClick={this.createEvent} />
     } 
     else if (this.state.appView === 'CreateEvent') {
       appView = <CreateEvent currentUser={this.state.currentUsername} />
