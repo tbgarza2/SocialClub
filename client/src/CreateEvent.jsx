@@ -37,15 +37,15 @@ class CreateEvent extends React.Component {
             }
     })
 
-        axios({
-            method: 'post',
-            url: 'api/chatkit/rooms',
-            data: {
-                id: name,
-                creatorId: this.props.currentUser,
-                name: name,
-            }
-    })
+    //     axios({
+    //         method: 'post',
+    //         url: 'api/chatkit/rooms',
+    //         data: {
+    //             id: name,
+    //             creatorId: this.props.currentUser,
+    //             name: name,
+    //         }
+    // })
 }
 
 
