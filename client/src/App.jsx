@@ -48,7 +48,6 @@ class App extends React.Component {
   }
 
   postUser() {
-
     axios({
       method: 'post',
       url: `api/db/users/`,
@@ -194,7 +193,7 @@ class App extends React.Component {
       appView = <Home viewSummary={this.handleUserEventClick} userid={this.state.userId} handleClick={this.createEvent} />
     } 
     else if (this.state.appView === 'CreateEvent') {
-      appView = <CreateEvent currentUser={this.state.currentUsername} />
+      appView = <CreateEvent currentUser={this.state.currentUsername} googleUser={this.state.googleUser} />
     } 
     else if (this.state.appView === 'Created Events') {
       appView = <UserEvents events={this.state.userEvents} handleClick={this.handleUserEventClick} />

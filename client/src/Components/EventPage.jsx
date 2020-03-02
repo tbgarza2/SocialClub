@@ -13,7 +13,8 @@ class EventPage extends Component {
             eventData: [],
             currentId: '',
             currentView: '',
-            currentUsername: ''
+            currentUsername: '',
+            roomID: ''
         }
         this.changeView = this.changeView.bind(this);
         this.createUser = this.createUser.bind(this);
@@ -72,10 +73,8 @@ class EventPage extends Component {
 
         if (this.state.currentView === "ChatMessage") {
             view = <ChatMessage changeView={this.changeView} />
-        } else if (this.state.currentView === "Signup") {
-            view = <Signup onSubmit={this.createUser} />
         } else if (this.state.currentView === "chatApp") {
-            view = <ChatApp currentid={this.state.currentId} />
+            view = <ChatApp currentid={this.state.currentId} roomID={this.state.eventData.roomID}/>
         }
         return (
             <div>

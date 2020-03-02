@@ -6,7 +6,7 @@ const connection = mysql.createConnection(mysqlConfig);
 const query = util.promisify(connection.query).bind(connection);
 
 const saveEvent = (req, res) => {
-    query(`INSERT INTO events (creator_id, name, time, category, address, summary) VALUES ((SELECT id FROM users WHERE name="${req.creator}"), "${req.name}", "${req.date}", "${req.category}", "${req.address}", "${req.summary}")`)
+    query(`INSERT INTO events (creator_id, name, time, category, address, summary, roomID) VALUES ((SELECT id FROM users WHERE name="${req.creator}"), "${req.name}", "${req.date}", "${req.category}", "${req.address}", "${req.summary}", "${req.roomID}")`)
     .then(console.log('Event added'))
     .catch(err => {
         console.log(err)
