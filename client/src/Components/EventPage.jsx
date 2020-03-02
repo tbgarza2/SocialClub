@@ -22,11 +22,14 @@ class EventPage extends Component {
     componentDidMount() {
         axios({
             method: 'get',
-            url: `api/db/events/${this.props.eventID}`,
+            url: `api/db/events/page/${this.props.eventID}`,
         })
-            .then(res => this.setState({ eventData: res.data[0] }))
+            .then(res => {
+                debugger;
+                this.setState({ eventData: res.data[0] })
+            })
 
-            this.createUser()
+        this.createUser()
     }
 
     //chat view
@@ -47,7 +50,7 @@ class EventPage extends Component {
             }
         })
             .then((res) => {
-                debugger;
+
                 this.setState({
                     currentUsername: this.props.googleUser.profileObj.name,
                     currentId: this.props.googleUser.profileObj.email,
@@ -55,12 +58,12 @@ class EventPage extends Component {
                 })
             }).catch((err) => {
                 console.log(err)
-                debugger;
-                    this.setState({
-                        currentUsername: this.props.googleUser.profileObj.name,
-                        currentId: this.props.googleUser.profileObj.email,
-                        currentView: 'chatApp'
-                    })
+
+                this.setState({
+                    currentUsername: this.props.googleUser.profileObj.name,
+                    currentId: this.props.googleUser.profileObj.email,
+                    currentView: 'chatApp'
+                })
 
             });
     }

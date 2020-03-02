@@ -34,7 +34,7 @@ const getAllEvents = (req, res) => {
 
 const getEventPage = (req, res) => {
     const id = req
-    return query(`SELECT * FROM events WHERE id=${id}`)
+    return query(`SELECT * FROM events WHERE id="+${id}"`)
 }
 
 const rsvp = (req, res) => {
