@@ -29,10 +29,12 @@ CREATE TABLE `status` (
   `status` varchar(20)
 );
 
-CREATE TABLE `rsvp_status` (
-  `eventid` int,
-  `userid` int,
-  `status` int
+CREATE TABLE rsvp (
+  user_id int(10) NOT NULL,
+  event_id int(10) NOT NULL,
+  PRIMARY KEY (user_id,event_id),
+  CONSTRAINT FK_users FOREIGN KEY (user_id) REFERENCES users (id),
+  CONSTRAINT FK_events FOREIGN KEY (event_id) REFERENCES  events(id)
 );
 
 CREATE TABLE `categories` (
@@ -44,8 +46,3 @@ CREATE TABLE `categories` (
 
 ALTER TABLE `events` ADD FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`);
 
-ALTER TABLE `rsvp_status` ADD FOREIGN KEY (`userid`) REFERENCES `users` (`id`);
-
-ALTER TABLE `rsvp_status` ADD FOREIGN KEY (`eventid`) REFERENCES `events` (`id`);
-
-ALTER TABLE `rsvp_status` ADD FOREIGN KEY (`status`) REFERENCES `categories` (`id`);

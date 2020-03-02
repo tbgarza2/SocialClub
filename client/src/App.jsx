@@ -92,7 +92,6 @@ class App extends React.Component {
     })
   }
 
-
   //chat sign up
   createUser(username) {
     axios({
@@ -210,7 +209,7 @@ class App extends React.Component {
     //App conditional render
     let appView = '';
     if (this.state.appView === 'Home') {
-      appView = <Home handleClick={this.createEvent} />
+      appView = <Home userid={this.state.userId} handleClick={this.createEvent} />
     } 
     else if (this.state.appView === 'CreateEvent') {
       appView = <CreateEvent currentUser={this.state.currentUsername} />
