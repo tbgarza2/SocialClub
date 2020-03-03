@@ -8,5 +8,5 @@ app.use(express.static(`${__dirname}/../react-client/dist`));
 // app.use('/api', apiRouter);
 
 module.exports = {
-    app,
+  app,
 };
