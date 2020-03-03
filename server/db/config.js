@@ -1,4 +1,4 @@
-const { DB_HOST, DB_USER, DB_PASS, DB_PATH } = require('./process.js');
+// const { DB_HOST, DB_USER, DB_PASS, DB_PATH } = require('./process.js');
 
 module.exports = {
     host: process.env.DB_HOST || 'localhost',
