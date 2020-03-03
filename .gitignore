@@ -1,3 +1,4 @@
 node_modules
-node_modules
 googleConfig.js
+client/dist/*.json
+client/dist/*.js
