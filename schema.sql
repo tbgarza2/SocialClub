@@ -30,19 +30,36 @@ CREATE TABLE `status` (
 );
 
 CREATE TABLE rsvp (
-  user_id int(10) NOT NULL,
-  event_id int(10) NOT NULL,
-  PRIMARY KEY (user_id,event_id),
-  CONSTRAINT FK_users FOREIGN KEY (user_id) REFERENCES users (id),
-  CONSTRAINT FK_events FOREIGN KEY (event_id) REFERENCES  events(id)
+  `user_id` int(10) NOT NULL,
+  `event_id` int(10) NOT NULL,
+  PRIMARY KEY (`user_id`,`event_id`),
+  CONSTRAINT `FK_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK_events` FOREIGN KEY (`event_id`) REFERENCES  `events`(`id`)
 );
 
 CREATE TABLE `categories` (
-  `category` varchar(20),
-  `id` int PRIMARY KEY AUTO_INCREMENT
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(20)
 );
 
+CREATE TABLE `message` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `created_at` TIMESTAMP,
+  `id_sender` int NOT NULL,
+  `id_recipient` int NOT NULL,
+  `message` varchar(255)
+);
 
 
 ALTER TABLE `events` ADD FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`);
 
+ALTER TABLE `message` ADD FOREIGN KEY (`id_sender`) REFERENCES `users` (`id`);
+
+ALTER TABLE `message` ADD FOREIGN KEY (`id_recipient`) REFERENCES `users` (`id`);
+
+INSERT INTO `categories` VALUES (null, "Social");
+INSERT INTO `categories` VALUES (null, "Gaming");
+INSERT INTO `categories` VALUES (null, "Food");
+INSERT INTO `categories` VALUES (null, "Sports");
+INSERT INTO `categories` VALUES (null, "Music");
+INSERT INTO `categories` VALUES (null, "Dance");

@@ -50,7 +50,7 @@ class App extends React.Component {
   postUser() {
     axios({
       method: 'post',
-      url: `api/db/users/`,
+      url: `api/user/users/`,
       data: {
         username: this.state.currentUsername,
         email: this.state.googleUser.profileObj.email
@@ -61,7 +61,7 @@ class App extends React.Component {
   getUser() {
     axios({
       method: 'get',
-      url: `api/db/users/${this.state.googleUser.profileObj.email}`,
+      url: `api/user/users/${this.state.googleUser.profileObj.email}`,
     })
     .then( res => this.setState({userId: res.data[0].id}) )
   }
@@ -69,7 +69,7 @@ class App extends React.Component {
   getUserEvents() {
     axios({
       method: 'get',
-      url: `api/db/events/${this.state.userId}`,
+      url: `api/event/events/${this.state.userId}`,
     }).then(res =>{
       console.log(res.data) 
       this.setState({userEvents: res.data})
