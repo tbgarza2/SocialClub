@@ -23,7 +23,7 @@ class EventPage extends Component {
     componentDidMount() {
         axios({
             method: 'get',
-            url: `api/db/events/page/${this.props.eventID}`,
+            url: `api/event/events/page/${this.props.eventID}`,
         })
             .then(res => {
                 this.setState({ eventData: res.data[0] })

@@ -29,7 +29,7 @@ class MapContainer extends Component {
   }
 
   getAllEvents() {
-    axios.get('api/db/events')
+    axios.get('api/event/events')
       .then((events) => {
         this.setState({
           events: events.data,
@@ -87,7 +87,7 @@ class MapContainer extends Component {
   };
 
   handleJoinClick() {
-    axios.post('api/db/rsvp', {eventId: this.state.activeMarker.id, userId: this.props.userid})
+    axios.post('api/rsvp/rsvp', {eventId: this.state.activeMarker.id, userId: this.props.userid})
     .then((joinStatus) => {
       console.log(joinStatus)
       if(joinStatus.data === true){
