@@ -25,7 +25,7 @@ class CreateEvent extends React.Component {
         const { name, address, date, category, summary, } = this.state
         axios({
             method: 'post',
-            url: 'api/db/events',
+            url: 'api/event/events',
             data: {
               name: name,
               address: address,
