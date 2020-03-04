@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const Chatkit = require('@pusher/chatkit-server');
+// const Chatkit = require('@pusher/chatkit-server');
 const { chatkitRouter } = require('./api/chatkit');
 const { eventRouter } = require('./api/events');
 const { messageRouter } = require('./api/messages');
@@ -23,10 +23,10 @@ app.use('/api/rsvp', rsvpRouter);
 app.use('/api/user', userRouter);
 app.use('/api/twilio', twilioRouter);
 
-const chatkit = new Chatkit.default({
-  instanceLocator: 'v1:us1:c505ed27-4164-40ae-93c1-3c5e0f669521',
-  key: '42ade2ac-932c-4653-9ce2-d0807ef066ef:rQ7Fb9xKgW/sQDI2OypBm5HdpPdAGDsFij8mQTcPMvk=',
-})
+// const chatkit = new Chatkit.default({
+//   instanceLocator: 'v1:us1:c505ed27-4164-40ae-93c1-3c5e0f669521',
+//   key: '42ade2ac-932c-4653-9ce2-d0807ef066ef:rQ7Fb9xKgW/sQDI2OypBm5HdpPdAGDsFij8mQTcPMvk=',
+// })
 
 
 app.listen(PORT, () => {

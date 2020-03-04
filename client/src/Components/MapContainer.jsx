@@ -30,6 +30,39 @@ class MapContainer extends Component {
     this.getAllEvents();
   }
 
+  onMarkerClick(props, marker) {
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: !this.state.showingInfoWindow,
+    });
+  }
+
+  onMapClicked(props) {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null,
+      });
+    }
+  }
+
+  onInfoWindowOpen(props, e) {
+    const { selectedPlace, activeMarker } = this.state;
+    const infoWindow = (
+      <div>
+        <h3>{selectedPlace.name}</h3>
+        <p>Address: {selectedPlace.address}</p>
+        <p>Time: {selectedPlace.time}</p>
+        <p>Category: {selectedPlace.category}</p>
+        <p>Summary: {selectedPlace.summary}</p>
+        <button onClick={this.handleJoinClick}>JOIN</button>
+        <button onClick={() => { this.handleViewClick({ target: { id: activeMarker.id } }); }}>VIEW EVENT</button>
+      </div>
+    );
+    ReactDOM.render(React.Children.only(infoWindow), document.getElementById('iwc'));
+  }
+
   getAllEvents() {
     axios.get('api/event/events')
       .then((events) => {
@@ -71,23 +104,6 @@ class MapContainer extends Component {
     });
   }
 
-  onMarkerClick(props, marker) {
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: !this.state.showingInfoWindow,
-    });
-  }
-
-  onMapClicked(props) {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null,
-      });
-    }
-  }
-
   handleJoinClick() {
     axios.post('api/rsvp/rsvp', { eventId: this.state.activeMarker.id, userId: this.props.userid })
       .then((joinStatus) => {
@@ -104,22 +120,7 @@ class MapContainer extends Component {
     this.props.viewSummary(eventId);
   }
 
-  onInfoWindowOpen(props, e) {
-    const { selectedPlace, activeMarker } = this.state;
-    const infoWindow = (
-      <div>
-        <h3>{selectedPlace.name}</h3>
-        <p>Address: {selectedPlace.address}</p>
-        <p>Time: {selectedPlace.time}</p>
-        <p>Category: {selectedPlace.category}</p>
-        <p>Summary: {selectedPlace.summary}</p>
-        <button onClick={this.handleJoinClick}>JOIN</button>
-        <button onClick={() => { this.handleViewClick({ target: { id: activeMarker.id } }); }}>VIEW EVENT</button>
-      </div>
-    );
-    ReactDOM.render(React.Children.only(infoWindow), document.getElementById('iwc'));
-  }
-
+ 
   render() {
     const styles = {
       map: {

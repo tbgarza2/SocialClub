@@ -9,9 +9,9 @@
 // };
 
 module.exports = {
-    host: '34.70.53.155',
+    host: 'localhost',
     user: 'root',
-    password: 'team4ahalfstar',
+    password: '',
     database: 'socialclub',
     // socketPath: '/cloudsql/team4ahalfstar:us-central1:team4ahalfstar'
 };
