@@ -50,16 +50,43 @@ const rsvp = (req, res) => {
 const rsvpUsers = event_id => {
   const mysqlquery = `
     SELECT * FROM
-        (
-            SELECT users.id, users.name
-            FROM rsvp
-            INNER JOIN users
-            ON users.id = rsvp.user_id
-            WHERE rsvp.event_id = ?
-        )
-        AS rsvp_users;
+      (
+        SELECT users.id, users.name
+        FROM rsvp
+        INNER JOIN users
+        ON users.id = rsvp.user_id
+        WHERE rsvp.event_id = ?
+      )
+    AS rsvp_users;
     `;
   return query(mysqlquery, [event_id]);
+};
+
+const sendMessage = (id_sender, id_recipient, message) => {
+  const mysqlQuery = 'INSERT INTO message VALUES(null, null, ?, ?, ?);';
+
+  return query(mysqlQuery, [id_sender, id_recipient, message]);
+};
+
+const getMessages = (id_sender, id_recipient) => {
+  const mysqlQuery = `
+    Select * FROM
+      (
+        SELECT message.id AS id_message, users.id AS id_user, message.created_at, users.name, message.message
+        FROM message
+        INNER JOIN users
+        ON users.id = message.id_sender
+        WHERE message.id_recipient = ? AND message.id_sender = ?
+        UNION
+        SELECT message.id AS id_message, users.id AS id_user, message.created_at, users.name, message.message
+        FROM message
+        INNER JOIN users
+        ON users.id = message.id_sender
+        WHERE message.id_sender = ? AND message.id_recipient = ?
+      )
+    AS all_messages
+    ORDER BY created_at;`;
+  return query(mysqlQuery, [id_sender, id_recipient, id_sender, id_recipient]);
 };
 
 module.exports = {
@@ -71,4 +98,6 @@ module.exports = {
   getEventPage,
   rsvp,
   rsvpUsers,
+  sendMessage,
+  getMessages,
 };
