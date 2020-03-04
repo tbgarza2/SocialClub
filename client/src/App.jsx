@@ -3,19 +3,19 @@ import './App.css';
 // import { hot } from "react-hot-loader";
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
-import MapContainer from './Components/MapContainer';
+import MapContainer from './Components/MapContainer.jsx';
 import { onSignIn } from '../dist/script';
 // Topbar Menu imports
-import MenuItem from './MenuItem';
-import Menu from './Menu';
-import MenuButton from './MenuButton';
+import MenuItem from './MenuItem.jsx';
+import Menu from './Menu.jsx';
+import MenuButton from './MenuButton.jsx';
 
-import UserProfile from './Components/userProfile';
-import CreateEvent from './CreateEvent';
-import Home from './Components/Home';
-import UserEvents from './Components/UserEvents';
-import AttendingEvents from './Components/AttendingEvents';
-import EventPage from './Components/EventPage';
+import UserProfile from './Components/userProfile.jsx';
+import CreateEvent from './CreateEvent.jsx';
+import Home from './Components/Home.jsx';
+import UserEvents from './Components/UserEvents.jsx';
+import AttendingEvents from './Components/AttendingEvents.jsx';
+import EventPage from './Components/EventPage.jsx';
 
 
 class App extends React.Component {
@@ -25,7 +25,7 @@ class App extends React.Component {
       googleUser: [],
       menuOpen: false,
       currentUsername: '',
-      userId: '',
+      user_id: 0,
       userEvents: [],
       clickedEventId: '',
       currentId: '',
@@ -40,10 +40,30 @@ class App extends React.Component {
     this.handleUserEventClick = this.handleUserEventClick.bind(this);
   }
 
-  // create event button on click changes appView
-  createEvent() {
-    this.setState({
-      appView: 'CreateEvent',
+
+  getUser() {
+
+    return axios({
+      method: 'get',
+      url: `api/user/users/${this.state.googleUser.profileObj.email}`,
+    })
+      .then(res => {
+        console.log(res.data);
+        this.setState({ user_id: res.data[0].id });
+        console.log(this.state.user_id);
+      })
+  }
+
+
+  getUserEvents() {
+    const { user_id } = this.state;
+    console.log(user_id);
+    axios({
+      method: 'get',
+      url: `/api/event/events/${user_id}`,
+    }).then(res => {
+      console.log(res.data);
+      this.setState({ userEvents: res.data });
     });
   }
 
@@ -58,61 +78,50 @@ class App extends React.Component {
     });
   }
 
-  getUser() {
-    axios({
-      method: 'get',
-      url: `api/user/users/${this.state.googleUser.profileObj.email}`,
-    })
-      .then(res => this.setState({ userId: res.data[0].id }));
-  }
-
-  getUserEvents() {
-    axios({
-      method: 'get',
-      url: `api/event/events/${this.state.userId}`,
-    }).then(res => {
-      console.log(res.data);
-      this.setState({ userEvents: res.data });
+  // create event button on click changes appView
+  createEvent() {
+    this.setState({
+      appView: 'CreateEvent',
     });
   }
 
   // chat view
-  changeView(view) {
-    this.setState({
-      currentView: view,
-    });
-  }
+  // changeView(view) {
+  //   this.setState({
+  //     currentView: view,
+  //   });
+  // }
 
   // chat sign up
-  createUser(username) {
-    axios({
-      method: 'post',
-      url: 'api/chatkit/users',
-      data: {
-        id: username,
-        name: username,
-      },
-    })
-      .then((res) => {
-        console.log(res.data.id);
-        this.setState({
-          currentUsername: res.data.name,
-          currentId: res.data.id,
-          currentView: 'chatApp',
-        });
-      }).catch((err) => {
-        console.log(err);
-        if (err.status === 400) {
-          this.setState({
-            currentUsername: username,
-            currentId: username,
-            currentView: 'chatApp',
-          });
-        } else {
-          console.log(err.status);
-        }
-      });
-  }
+  // createUser(username) {
+  //   axios({
+  //     method: 'post',
+  //     url: 'api/chatkit/users',
+  //     data: {
+  //       id: username,
+  //       name: username,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       console.log(res.data.id);
+  //       this.setState({
+  //         currentUsername: res.data.name,
+  //         currentId: res.data.id,
+  //         currentView: 'chatApp',
+  //       });
+  //     }).catch((err) => {
+  //       console.log(err);
+  //       if (err.status === 400) {
+  //         this.setState({
+  //           currentUsername: username,
+  //           currentId: username,
+  //           currentView: 'chatApp',
+  //         });
+  //       } else {
+  //         console.log(err.status);
+  //       }
+  //     });
+  // }
 
   // Menu handler
   handleMenuClick() {
@@ -126,6 +135,7 @@ class App extends React.Component {
 
 
   handleUserEventClick(event) {
+    console.log('clicked event', event);
     this.setState({ clickedEventId: event.target.id });
     this.setState({ appView: 'EventPage' });
   }
@@ -191,7 +201,7 @@ class App extends React.Component {
     // App conditional render
     let appView = '';
     if (this.state.appView === 'Home') {
-      appView = <Home viewSummary={this.handleUserEventClick} userid={this.state.userId} handleClick={this.createEvent} />;
+      appView = <Home viewSummary={this.handleUserEventClick} user_id={this.state.user_id} handleClick={this.createEvent} />;
     } else if (this.state.appView === 'CreateEvent') {
       appView = <CreateEvent currentUser={this.state.currentUsername} googleUser={this.state.googleUser} />;
     } else if (this.state.appView === 'Created Events') {
