@@ -25,7 +25,7 @@ class App extends React.Component {
       googleUser: [],
       menuOpen: false,
       currentUsername: '',
-      user_id: 0,
+      userId: 0,
       userEvents: [],
       clickedEventId: '',
       currentId: '',
@@ -42,27 +42,22 @@ class App extends React.Component {
 
 
   getUser() {
-
     return axios({
       method: 'get',
       url: `api/user/users/${this.state.googleUser.profileObj.email}`,
     })
       .then(res => {
-        console.log(res.data);
-        this.setState({ user_id: res.data[0].id });
-        console.log(this.state.user_id);
-      })
+        this.setState({ userId: res.data[0].id });
+      });
   }
 
 
   getUserEvents() {
-    const { user_id } = this.state;
-    console.log(user_id);
+    const { userId } = this.state;
     axios({
       method: 'get',
-      url: `/api/event/events/${user_id}`,
+      url: `/api/event/events/${userId}`,
     }).then(res => {
-      console.log(res.data);
       this.setState({ userEvents: res.data });
     });
   }
@@ -135,7 +130,6 @@ class App extends React.Component {
 
 
   handleUserEventClick(event) {
-    console.log('clicked event', event);
     this.setState({ clickedEventId: event.target.id });
     this.setState({ appView: 'EventPage' });
   }
@@ -201,7 +195,7 @@ class App extends React.Component {
     // App conditional render
     let appView = '';
     if (this.state.appView === 'Home') {
-      appView = <Home viewSummary={this.handleUserEventClick} user_id={this.state.user_id} handleClick={this.createEvent} />;
+      appView = <Home viewSummary={this.handleUserEventClick} userId={this.state.userId} handleClick={this.createEvent} />;
     } else if (this.state.appView === 'CreateEvent') {
       appView = <CreateEvent currentUser={this.state.currentUsername} googleUser={this.state.googleUser} />;
     } else if (this.state.appView === 'Created Events') {
