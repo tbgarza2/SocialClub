@@ -5,7 +5,6 @@ const { rsvp, rsvpUsers } = require('../db/index.js');
 
 rsvpRouter.post('/rsvp/:event_id/:user_id', (req, res) => {
   console.log(req);
-  // debugger;
   const { event_id, user_id } = req.params;
   rsvp(event_id, user_id)
     .then(() => {
@@ -17,10 +16,11 @@ rsvpRouter.post('/rsvp/:event_id/:user_id', (req, res) => {
 });
 
 rsvpRouter.get('/rsvp/conf/:event_id', (req, res) => {
-  console.log(req);
+  console.log(req.params);
   // debugger;
   rsvpUsers(req.params.event_id)
     .then(users => {
+      console.log(users);
       res.send(users);
     })
     .catch(error => {
