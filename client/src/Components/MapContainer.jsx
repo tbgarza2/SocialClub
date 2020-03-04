@@ -71,7 +71,7 @@ class MapContainer extends Component {
     });
   }
 
-  onMarkerClick(props, marker, e) {
+  onMarkerClick(props, marker) {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -139,7 +139,7 @@ class MapContainer extends Component {
           minZoom={2}
           maxZoom={15}
           // style={mapStyles}
-          initialCenter={{ lat: 47.444, lng: -122.176 }}
+          initialCenter={{ lat: 29.969, lng: -90.0733 }}
           disableDefaultUI
           onClick={this.onMapClicked}
         >
