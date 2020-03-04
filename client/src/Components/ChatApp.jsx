@@ -53,7 +53,6 @@ class ChatApp extends Component {
 
 
   addMessage(text) {
-    console.log(this.state);
     this.state.currentUser.sendMessage({
       text,
       roomId: this.state.currentRoom.id,
