@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import Home from './Home';
+import Home from './Home.jsx';
 
 class UserProfile extends Component {
   constructor(props) {
@@ -13,8 +13,10 @@ class UserProfile extends Component {
 
   componentDidMount() {
     this.props.postUser();
-    this.props.getUser();
-    this.props.getUserEvents();
+    this.props.getUser()
+      .then(() => {
+        this.props.getUserEvents();
+      });
   }
 
   render() {
