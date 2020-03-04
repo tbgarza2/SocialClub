@@ -1,16 +1,20 @@
 const { Router } = require('express');
 
 const messageRouter = Router();
-const {
-  getMessages,
-} = require('../db/index.js');
+const { getMessages, sendMessage } = require('../db/index.js');
 
-messageRouter.get('/messages/:id_sender/:id_recipient', (req, res) => {
+messageRouter.post('/:id_sender/:id_recipient', (req, res) => {
   const { id_sender, id_recipient } = req.params;
-  getMessages(id_sender, id_recipient)
-    .then(messages => {
-      res.send(messages);
-    });
+  const { message } = req.body;
+  sendMessage(id_sender, id_recipient, message).then(() => {
+    console.log('Message sent!');
+    res.send('Message sent!');
+  });
+});
+
+messageRouter.get('/:id_sender/:id_recipient', (req, res) => {
+  const { id_sender, id_recipient } = req.params;
+  getMessages(id_sender, id_recipient).then(messages => res.send(messages));
 });
 
 module.exports = {
