@@ -11,6 +11,7 @@ class CreateEvent extends React.Component {
       date: '',
       category: '',
       summary: '',
+      phones: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleName = this.handleName.bind(this);
@@ -18,9 +19,24 @@ class CreateEvent extends React.Component {
     this.handleDateTime = this.handleDateTime.bind(this);
     this.handleCategory = this.handleCategory.bind(this);
     this.handleSummary = this.handleSummary.bind(this);
+    this.sendTwilio = this.sendTwilio.bind(this);
+    this.handlePhone = this.handlePhone.bind(this);
+    this.addPhone = this.addPhone.bind(this);
+    this.removePhone = this.removePhone.bind(this);
   }
 
   handleSubmit() {
+    const {
+      name, address, date, category, summary,
+    } = this.state;
+  }
+
+  handleSubmit() {
+    console.log('clicked');
+    const { phones } = this.state;
+    if (phones.length) {
+      phones.forEach(phone => this.sendTwilio(phone));
+    }
     const {
       name, address, date, category, summary,
     } = this.state;
@@ -38,15 +54,31 @@ class CreateEvent extends React.Component {
       },
     });
 
-  //   axios({
-  //     method: 'post',
-  //     url: 'api/chatkit/rooms',
-  //     data: {
-  //       id: name,
-  //       creatorId: this.props.googleUser.profileObj.email,
-  //       name,
-  //     },
-  //   });
+    // axios({
+    //   method: 'post',
+    //   url: 'api/chatkit/rooms',
+    //   data: {
+    //     id: name,
+    //     creatorId: this.props.googleUser.profileObj.email,
+    //     name: name,
+    //   }
+    // });
+  }
+
+  sendTwilio(phone) {
+    const message = {
+      to: `+1${phone}`,
+      body: 'lollipop',
+    };
+
+    fetch('/api/twilio', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    })
+      .then(res => res.json());
   }
 
 
@@ -70,9 +102,28 @@ class CreateEvent extends React.Component {
     this.setState({ summary: event.target.value });
   }
 
+  handlePhone(e, index) {
+    const { phones } = this.state;
+    phones[index] = e.target.value;
+    this.setState({ phones });
+  }
+
+  addPhone() {
+    const { phones } = this.state;
+    this.setState({ phones: [...phones, ''] });
+  }
+
+  removePhone(e, index) {
+    const { phones } = this.state;
+
+    phones.splice(index, 1);
+
+    this.setState({ phones: [...phones] });
+  }
+
   render() {
     const {
-      name, address, date, category, summary,
+      name, address, date, category, summary, phones,
     } = this.state;
     return (
       <div>
@@ -128,6 +179,25 @@ class CreateEvent extends React.Component {
               <label className="col-md-4 control-label" htmlFor="summary">Summary</label>
               <div className="col-md-4">
                 <textarea className="form-control" id="summary" name="summary" value={summary} onChange={this.handleSummary}>A short description of your event!</textarea>
+              </div>
+            </div>
+
+            {
+                      phones.map((phone, index) => (
+                        <div className="form-group" key={index}>
+                          <label className="col-md-4 control-label" htmlFor="to">Enter phone</label>
+                          <div className="col-md-4">
+                            <input style={{ borderRadius: 4 }} placeholder="(555) 555-5555" type="tel" name="to" id={index} value={phone} onChange={(e) => this.handlePhone(e, index)} />
+                            <button id="removephonebutton" name="removephonebutton" type="button" className="btn btn-danger btn-sm" onClick={(e) => this.removePhone(e, index)}>X</button>
+                          </div>
+                        </div>
+                      ))
+                    }
+
+            <div className="form-group">
+              <label className="col-md-4 control-label" htmlFor="phonebutton" />
+              <div className="col-md-4">
+                <button id="phonebutton" name="phonebutton" className="btn btn-secondary" type="button" onClick={this.addPhone}>Invite friends</button>
               </div>
             </div>
 
