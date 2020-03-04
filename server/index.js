@@ -7,6 +7,7 @@ const { eventRouter } = require('./api/events');
 const { messageRouter } = require('./api/messages');
 const { rsvpRouter } = require('./api/rsvp');
 const { userRouter } = require('./api/users');
+const { twilioRouter } = require('./api/twilio');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use('/api/event', eventRouter);
 app.use('/api/message', messageRouter);
 app.use('/api/rsvp', rsvpRouter);
 app.use('/api/user', userRouter);
+app.use('/api/twilio', twilioRouter);
 
 const chatkit = new Chatkit.default({
   instanceLocator: 'v1:us1:c505ed27-4164-40ae-93c1-3c5e0f669521',
