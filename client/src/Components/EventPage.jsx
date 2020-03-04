@@ -33,14 +33,11 @@ class EventPage extends Component {
       .get(`/api/rsvp/rsvp/conf/${eventID}`)
       .then(rsvpUsers => {
         console.log('rsvp list grabbed');
-        console.log(rsvpUsers);
         this.setState({
           users: rsvpUsers.data,
         });
-        console.log(this.state.users);
       })
       .catch(error => {
-        debugger;
         console.log("No users rsvp'd");
         console.log(error);
       });

@@ -30,14 +30,55 @@ class MapContainer extends Component {
     this.getAllEvents();
   }
 
-  getAllEvents() {
-    axios.get('api/event/events')
-      .then((events) => {
-        this.setState({
-          events: events.data,
-        });
-        this.loadCords();
+  onMarkerClick(props, marker) {
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: !this.state.showingInfoWindow,
+    });
+  }
+
+  onMapClicked(props) {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null,
       });
+    }
+  }
+
+  onInfoWindowOpen(props, e) {
+    const { selectedPlace, activeMarker } = this.state;
+    const infoWindow = (
+      <div>
+        <h3>{selectedPlace.name}</h3>
+        <p>Address: {selectedPlace.address}</p>
+        <p>Time: {selectedPlace.time}</p>
+        <p>Category: {selectedPlace.category}</p>
+        <p>Summary: {selectedPlace.summary}</p>
+        <button onClick={this.handleJoinClick}>JOIN</button>
+        <button
+          onClick={() => {
+            this.handleViewClick({ target: { id: activeMarker.id } });
+          }}
+        >
+          VIEW EVENT
+        </button>
+      </div>
+    );
+    ReactDOM.render(
+      React.Children.only(infoWindow),
+      document.getElementById('iwc'),
+    );
+  }
+
+  getAllEvents() {
+    axios.get('api/event/events').then(events => {
+      this.setState({
+        events: events.data,
+      });
+      this.loadCords();
+    });
   }
 
   convertAddress(address) {
@@ -58,66 +99,33 @@ class MapContainer extends Component {
   loadCords() {
     this.state.events.forEach(event => {
       this.convertAddress(event.address)
-        .then((cords) => {
+        .then(cords => {
           this.setState(prevState => {
             const eventCords = { ...prevState.eventCords };
             eventCords[event.id] = cords;
             return { eventCords };
           });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     });
   }
 
-  onMarkerClick(props, marker) {
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: !this.state.showingInfoWindow,
-    });
-  }
-
-  onMapClicked(props) {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null,
-      });
-    }
-  }
-
   handleJoinClick() {
-    axios.post('api/rsvp/rsvp', { eventId: this.state.activeMarker.id, userId: this.props.userid })
-      .then((joinStatus) => {
-        console.log(joinStatus);
-        if (joinStatus.data === true) {
-          alert('JOINED EVENT');
-        } else {
-          alert('There was an error joining this event you might have already joined or dont have permission');
-        }
+    const eventId = this.state.activeMarker.id;
+    const { userId } = this.props;
+    axios.post(`/api/rsvp/rsvp/${eventId}/${userId}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch(res => {
+        console.log(res.data);
       });
   }
 
   handleViewClick(eventId) {
     this.props.viewSummary(eventId);
-  }
-
-  onInfoWindowOpen(props, e) {
-    const { selectedPlace, activeMarker } = this.state;
-    const infoWindow = (
-      <div>
-        <h3>{selectedPlace.name}</h3>
-        <p>Address: {selectedPlace.address}</p>
-        <p>Time: {selectedPlace.time}</p>
-        <p>Category: {selectedPlace.category}</p>
-        <p>Summary: {selectedPlace.summary}</p>
-        <button onClick={this.handleJoinClick}>JOIN</button>
-        <button onClick={() => { this.handleViewClick({ target: { id: activeMarker.id } }); }}>VIEW EVENT</button>
-      </div>
-    );
-    ReactDOM.render(React.Children.only(infoWindow), document.getElementById('iwc'));
   }
 
   render() {
@@ -143,11 +151,25 @@ class MapContainer extends Component {
           disableDefaultUI
           onClick={this.onMapClicked}
         >
-          {this.state.events.map(event => <Marker id={event.id} address={event.address} time={event.time} category={event.category} summary={event.summary} name={event.name} onClick={this.onMarkerClick} key={event.id} position={eventCords[event.id]} />)}
+          {this.state.events.map(event => (
+            <Marker
+              id={event.id}
+              address={event.address}
+              time={event.time}
+              category={event.category}
+              summary={event.summary}
+              name={event.name}
+              onClick={this.onMarkerClick}
+              key={event.id}
+              position={eventCords[event.id]}
+            />
+          ))}
           <InfoWindow
             marker={activeMarker}
             visible={showingInfoWindow}
-            onOpen={e => { this.onInfoWindowOpen(this.props, e); }}
+            onOpen={e => {
+              this.onInfoWindowOpen(this.props, e);
+            }}
           >
             <div id="iwc" />
           </InfoWindow>
