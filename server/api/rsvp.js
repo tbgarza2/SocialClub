@@ -8,16 +8,16 @@ rsvpRouter.post('/rsvp/:event_id/:user_id', (req, res) => {
   const { event_id, user_id } = req.params;
   rsvp(event_id, user_id)
     .then(() => {
-      res.send(res);
+      res.send(`user id of ${user_id} has rsvp'd to ${event_id}`);
     })
     .catch(() => {
-      res.send("No RSVP'D users");
+      // debugger;
+      res.send('could not RSVP user');
     });
 });
 
 rsvpRouter.get('/rsvp/conf/:event_id', (req, res) => {
   console.log(req.params);
-  // debugger;
   rsvpUsers(req.params.event_id)
     .then(users => {
       console.log(users);

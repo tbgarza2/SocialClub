@@ -1,7 +1,6 @@
 function onSignIn(googleUser) {
   const profile = googleUser.getBasicProfile();
   const { id_token } = googleUser.getAuthResponse();
-  console.log('worked');
   $('.g-signin2').css('display', 'none');
   $('.data').css('display', 'block');
   $('#pic').attr('src', profile.getImageUrl());
