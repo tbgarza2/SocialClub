@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 module.exports = {
-  entry: "./client/src/index.js",
+  entry: "./client/src/index.jsx",
   mode: "development",
   target: "web",
   module: {
@@ -29,7 +29,8 @@ module.exports = {
     contentBase: path.join(__dirname, "public/"),
     port: 8080,
     publicPath: "http://localhost:8080/dist/",
-    hotOnly: true
+    hotOnly: true,
+    historyApiFallback: true,
   },
   
   
