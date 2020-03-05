@@ -15,6 +15,8 @@ class MapContainer extends Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
+      filterByAddress: 'All',
+      filterByEvent: 'All',
     };
 
     this.convertAddress = this.convertAddress.bind(this);
@@ -24,9 +26,12 @@ class MapContainer extends Component {
     this.handleJoinClick = this.handleJoinClick.bind(this);
     this.handleViewClick = this.handleViewClick.bind(this);
     this.getAllEvents = this.getAllEvents.bind(this);
+    this.handleFilterAddress = this.handleFilterAddress.bind(this);
+    this.handleFilterEvent = this.handleFilterEvent.bind(this);
   }
 
   componentDidMount() {
+    console.log(this.state.events);
     this.getAllEvents();
   }
 
@@ -116,11 +121,20 @@ class MapContainer extends Component {
       });
   }
 
+  handleFilterAddress(event) {
+    this.setState({ filterByAddress: event.target.value });
+    console.log(`address filter ${this.state.filterByAddress}`);
+  }
+
+  handleFilterEvent(event) {
+    this.setState({ filterByEvent: event.target.value });
+    console.log(`address filter ${this.state.filterByEvent}`);
+  }
+
   handleViewClick(eventId) {
     this.props.viewSummary(eventId);
   }
 
- 
   render() {
     const styles = {
       map: {
@@ -130,29 +144,85 @@ class MapContainer extends Component {
       },
     };
     const { google } = this.props;
-    const { eventCords, activeMarker, showingInfoWindow } = this.state;
+    const { eventCords, activeMarker, showingInfoWindow, events, filterByAddress, filterByEvent } = this.state;
     return (
-      <div className="map">
-        <Map
-          style={styles.map}
-          google={google}
-          zoom={10}
-          minZoom={2}
-          maxZoom={15}
-          // style={mapStyles}
-          initialCenter={{ lat: 29.969, lng: -90.0733 }}
-          disableDefaultUI
-          onClick={this.onMapClicked}
-        >
-          {this.state.events.map(event => <Marker id={event.id} address={event.address} time={event.time} category={event.category} summary={event.summary} name={event.name} onClick={this.onMarkerClick} key={event.id} position={eventCords[event.id]} />)}
-          <InfoWindow
-            marker={activeMarker}
-            visible={showingInfoWindow}
-            onOpen={e => { this.onInfoWindowOpen(this.props, e); }}
+      <div>
+        <div>
+          <h3>Filter Map</h3>
+          <div className="form-group">
+          <label className="col-md-4 control-label" htmlFor="category">Address</label>
+            <div className="col-md-4">
+              <select id="address" name="address" value={filterByAddress} onChange={this.handleFilterAddress}>
+                <option value="All">All</option>
+                {events.map(event => {
+                  const arr = event.address.split(',');
+                  const address = arr[0].trim();
+                  return <option value={address}>{address}</option>;
+                })}
+              </select>
+            </div>
+          </div>
+          <div className="form-group">
+          <label className="col-md-4 control-label" htmlFor="category">City</label>
+            <div className="col-md-4">
+              <select id="city" name="city" value={filterByAddress} onChange={this.handleFilterAddress}>
+                <option value="All">All</option>
+                {events.map(event => {
+                  const arr = event.address.split(',');
+                  const city = arr[1].trim();
+                  return <option value={city}>{city}</option>;
+                })}
+              </select>
+            </div>
+          </div>
+          <div className="form-group">
+          <label className="col-md-4 control-label" htmlFor="category">State</label>
+            <div className="col-md-4">
+              <select id="state" name="state" value={filterByAddress} onChange={this.handleFilterAddress}>
+                <option value="All">All</option>
+                {events.map(event => {
+                  const arr = event.address.split(',');
+                  const state = arr[arr.length - 1].trim().slice(0, 2);
+                  return <option value={state}>{state}</option>;
+                })}
+              </select>
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="col-md-4 control-label" htmlFor="category">Event</label>
+            <div className="col-md-4">
+              <select id="event" name="event" value={filterByEvent} onChange={this.handleFilterEvent}>
+                <option value="All">All</option>
+                {events.map(event => <option value={event.category}>{event.category}</option>)}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div className="map">
+          <Map
+            style={styles.map}
+            google={google}
+            zoom={10}
+            minZoom={2}
+            maxZoom={15}
+            // style={mapStyles}
+            initialCenter={{ lat: 29.969, lng: -90.0733 }}
+            disableDefaultUI
+            onClick={this.onMapClicked}
           >
-            <div id="iwc" />
-          </InfoWindow>
-        </Map>
+            {events
+              .filter(event => (filterByAddress !== 'All' ? event.address.includes(filterByAddress) : event))
+              .filter(event => (filterByEvent !== 'All' ? event.category.includes(filterByEvent) : event))
+              .map(event => <Marker id={event.id} address={event.address} time={event.time} category={event.category} summary={event.summary} name={event.name} onClick={this.onMarkerClick} key={event.id} position={eventCords[event.id]} />)}
+            <InfoWindow
+              marker={activeMarker}
+              visible={showingInfoWindow}
+              onOpen={e => { this.onInfoWindowOpen(this.props, e); }}
+            >
+              <div id="iwc" />
+            </InfoWindow>
+          </Map>
+        </div>
       </div>
     );
   }
