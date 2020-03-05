@@ -29,7 +29,7 @@ class UserEvents extends Component {
     const { handleClick } = this.props;
     return (
       <div>
-        <h3>Your RSVP Events</h3>
+        <h3>Your RSVP Events!!</h3>
         <ul>
           {this.state.rsvpEvents.map(event => (
             <li key={event.id} id={event.id} onClick={handleClick}>
