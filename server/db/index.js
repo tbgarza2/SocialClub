@@ -39,7 +39,7 @@ const getEventPage = (req, res) => {
   return query(`SELECT * FROM events WHERE id="+${id}"`);
 };
 
-const rsvp = (user_id, event_id) => {
+const rsvp = (event_id, user_id) => {
   return query(
     `INSERT INTO rsvp (user_id, event_id) VALUES (${user_id}, ${event_id})`,
   );
