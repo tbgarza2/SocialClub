@@ -9,6 +9,7 @@ class UserEvents extends Component {
   render() {
     return (
       <div>
+        <h3>Events You Created</h3>
         <ul>
           {this.props.events.map(event => (
             <li key={event.id} id={event.id} onClick={this.props.handleClick}>

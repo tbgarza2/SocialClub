@@ -36,17 +36,11 @@ class Menu extends React.Component {
     };
     return (
       <div style={styles.container}>
-        {
-            this.state.open
-              ? (
-                <div style={styles.menuList}>
-                  {this.props.children}
-                </div>
-              ) : null
-          }
+        {this.state.open ? (
+          <div style={styles.menuList}>{this.props.children}</div>
+        ) : null}
       </div>
     );
   }
 }
-
 export default Menu;

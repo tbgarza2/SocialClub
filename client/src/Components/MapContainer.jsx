@@ -62,20 +62,29 @@ class MapContainer extends Component {
         <p>Category: {selectedPlace.category}</p>
         <p>Summary: {selectedPlace.summary}</p>
         <button onClick={this.handleJoinClick}>JOIN</button>
-        <button onClick={() => { this.handleViewClick({ target: { id: activeMarker.id } }); }}>VIEW EVENT</button>
+        <button
+          onClick={() => {
+            this.handleViewClick({ target: { id: activeMarker.id } });
+          }}
+        >
+          VIEW EVENT
+        </button>
       </div>
     );
-    ReactDOM.render(React.Children.only(infoWindow), document.getElementById('iwc'));
+    ReactDOM.render(
+      React.Children.only(infoWindow),
+      document.getElementById('iwc'),
+    );
+
   }
 
   getAllEvents() {
-    axios.get('api/event/events')
-      .then((events) => {
-        this.setState({
-          events: events.data,
-        });
-        this.loadCords();
+    axios.get('api/event/events').then(events => {
+      this.setState({
+        events: events.data,
       });
+      this.loadCords();
+    });
   }
 
   convertAddress(address) {
@@ -96,28 +105,28 @@ class MapContainer extends Component {
   loadCords() {
     this.state.events.forEach(event => {
       this.convertAddress(event.address)
-        .then((cords) => {
+        .then(cords => {
           this.setState(prevState => {
             const eventCords = { ...prevState.eventCords };
             eventCords[event.id] = cords;
             return { eventCords };
           });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     });
   }
 
   handleJoinClick() {
-    axios.post('api/rsvp/rsvp', { eventId: this.state.activeMarker.id, userId: this.props.userid })
-      .then((joinStatus) => {
-        console.log(joinStatus);
-        if (joinStatus.data === true) {
-          alert('JOINED EVENT');
-        } else {
-          alert('There was an error joining this event you might have already joined or dont have permission');
-        }
+    const eventId = this.state.activeMarker.id;
+    const { userId } = this.props;
+    axios.post(`/api/rsvp/rsvp/${eventId}/${userId}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch(res => {
+        console.log(res.data);
       });
   }
 
@@ -217,7 +226,9 @@ class MapContainer extends Component {
             <InfoWindow
               marker={activeMarker}
               visible={showingInfoWindow}
-              onOpen={e => { this.onInfoWindowOpen(this.props, e); }}
+              onOpen={e => {
+                this.onInfoWindowOpen(this.props, e);
+              }}
             >
               <div id="iwc" />
             </InfoWindow>

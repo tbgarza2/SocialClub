@@ -25,14 +25,21 @@ class CreateEvent extends React.Component {
     this.removePhone = this.removePhone.bind(this);
   }
 
+  // handleSubmit() {
+  //   const {
+  //     name, address, date, category, summary,
+  //   } = this.state;
+  // }
+
   handleSubmit() {
     console.log('clicked');
     const { phones } = this.state;
     if (phones.length) {
       phones.forEach(phone => this.sendTwilio(phone));
     }
-    const { name, address, date, category, summary } = this.state;
-    const { currentUser } = this.props;
+    const {
+      name, address, date, category, summary,
+    } = this.state;
     axios({
       method: 'post',
       url: 'api/event/events',
@@ -85,7 +92,6 @@ class CreateEvent extends React.Component {
 
   handleDateTime(event) {
     this.setState({ date: event.target.value });
-
   }
 
   handleCategory(event) {
@@ -116,7 +122,9 @@ class CreateEvent extends React.Component {
   }
 
   render() {
-    const { name, address, date, category, summary, phones } = this.state;
+    const {
+      name, address, date, category, summary, phones,
+    } = this.state;
     return (
       <div>
         <form className="form-horizontal">
@@ -175,26 +183,26 @@ class CreateEvent extends React.Component {
             </div>
 
             {
-              phones.map((phone, index) => (
-                <div className="form-group" key={index}>
-                  <label className="col-md-4 control-label" htmlFor="to">Enter phone</label>
-                  <div className="col-md-4">
-                    <input style={{ borderRadius: 4 }} placeholder="(555) 555-5555" type="tel" name="to" id={index} value={phone} onChange={(e) => this.handlePhone(e, index)} />
-                    <button id="removephonebutton" name="removephonebutton" type="button" className="btn btn-danger btn-sm" onClick={(e) => this.removePhone(e, index)}>X</button>
-                  </div>
-                </div>
-              ))
-            }
+                      phones.map((phone, index) => (
+                        <div className="form-group" key={index}>
+                          <label className="col-md-4 control-label" htmlFor="to">Enter phone</label>
+                          <div className="col-md-4">
+                            <input style={{ borderRadius: 4 }} placeholder="(555) 555-5555" type="tel" name="to" id={index} value={phone} onChange={(e) => this.handlePhone(e, index)} />
+                            <button id="removephonebutton" name="removephonebutton" type="button" className="btn btn-danger btn-sm" onClick={(e) => this.removePhone(e, index)}>X</button>
+                          </div>
+                        </div>
+                      ))
+                    }
 
             <div className="form-group">
-              <label className="col-md-4 control-label" htmlFor="phonebutton"></label>
+              <label className="col-md-4 control-label" htmlFor="phonebutton" />
               <div className="col-md-4">
                 <button id="phonebutton" name="phonebutton" className="btn btn-secondary" type="button" onClick={this.addPhone}>Invite friends</button>
               </div>
             </div>
 
             <div className="form-group">
-              <label className="col-md-4 control-label" htmlFor="singlebutton"></label>
+              <label className="col-md-4 control-label" htmlFor="singlebutton" />
               <div className="col-md-4">
                 <button id="singlebutton" name="singlebutton" className="btn btn-primary" type="button" onClick={this.handleSubmit}>Sumbit</button>
               </div>

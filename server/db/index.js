@@ -47,12 +47,24 @@ const getEventPage = (req, res) => {
   return query(`SELECT * FROM events WHERE id="+${id}"`);
 };
 
-const rsvp = (req, res) => {
-  console.log(req);
-  const { user_id, event_id } = req;
+const rsvp = (event_id, user_id) => {
   return query(
     `INSERT INTO rsvp (user_id, event_id) VALUES (${user_id}, ${event_id})`,
   );
+};
+
+const userAttends = (user_id) => {
+  const sqlQuery = `
+  SELECT * FROM 
+    (
+      SELECT events.id, events.category, events.name, events.time, events.address, events.creator_id, events.summary
+      FROM rsvp 
+      INNER JOIN events 
+      ON events.id = rsvp.event_id 
+      WHERE rsvp.user_id = ?
+    ) 
+  AS rsvp_events;`;
+  return query(sqlQuery, [user_id]);
 };
 
 const rsvpUsers = event_id => {
@@ -105,6 +117,7 @@ module.exports = {
   selectUser,
   getEventPage,
   rsvp,
+  userAttends,
   rsvpUsers,
   sendMessage,
   getMessages,
