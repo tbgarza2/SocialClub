@@ -1,15 +1,16 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { Component } from 'react';
+import axios from 'axios';
+
 
 class OtherProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userID: 1,
-      user: { name: "Maybe", id: 4 },
-      messageInput: "",
+      user: { name: 'Maybe', id: 4 },
+      messageInput: '',
       messages: [],
-      openMessages: false
+      openMessages: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,8 +26,7 @@ class OtherProfile extends Component {
 
   getMessages() {
     const { user, userID } = this.state;
-    axios
-      .get(`/api/message/${userID}/${user.id}`)
+    axios.get(`/api/message/${userID}/${user.id}`)
       .then(({ data }) => this.setState({ messages: data }));
   }
 
@@ -34,13 +34,13 @@ class OtherProfile extends Component {
     const { openMessages } = this.state;
 
     this.setState({
-      openMessages: !openMessages
+      openMessages: !openMessages,
     });
   }
 
   handleChange(e) {
     this.setState({
-      message: e.target.value
+      message: e.target.value,
     });
   }
 
@@ -48,14 +48,13 @@ class OtherProfile extends Component {
     e.preventDefault();
     this.handleMessage();
     this.setState({
-      message: ""
+      message: '',
     });
   }
 
   handleMessage() {
     const { user, userID, message } = this.state;
-    axios
-      .post(`/api/message/${userID}/${user.id}`, { message })
+    axios.post(`/api/message/${userID}/${user.id}`, { message })
       .then(m => console.log(m))
       .then(() => this.getMessages());
   }
@@ -65,15 +64,12 @@ class OtherProfile extends Component {
     return (
       <div>
         <h2>{user.name}</h2>
-        {messages
-          .slice(0)
-          .reverse()
-          .map(message => (
-            <div>
-              <h4>{message.name}:</h4>
-              <div>{message.message}</div>
-            </div>
-          ))}
+        {messages.slice(0).reverse().map(message => (
+          <div>
+            <h4>{message.name}:</h4>
+            <div>{message.message}</div>
+          </div>
+        ))}
         <input type="text" onChange={this.handleChange} value={messageInput} />
         <button onClick={this.handleSubmit}>Send</button>
       </div>
