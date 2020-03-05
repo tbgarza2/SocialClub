@@ -58,6 +58,7 @@ class App extends React.Component {
       method: 'get',
       url: `/api/event/events/${userId}`,
     }).then(res => {
+      console.log(res.data);
       this.setState({ userEvents: res.data });
     });
   }
@@ -201,7 +202,7 @@ class App extends React.Component {
     } else if (this.state.appView === 'Created Events') {
       appView = <UserEvents events={this.state.userEvents} handleClick={this.handleUserEventClick} />;
     } else if (this.state.appView === 'RSVP\'d Events') {
-      appView = <AttendingEvents />;
+      appView = <AttendingEvents userId={this.state.userId} handleClick={this.handleUserEventClick}/>;
     } else if (this.state.appView === 'Profile Page') {
       appView = <UserProfile user={this.state.googleUser} userName={this.state.currentUsername} postUser={this.postUser} getUser={this.getUser} getUserEvents={this.getUserEvents} />;
     } else if (this.state.appView === 'EventPage') {
