@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+<<<<<<< HEAD
 class AttendingEvents extends Component {
+=======
+class UserEvents extends Component {
+>>>>>>> 45ecec6a7a1facacaa69a79a26c7783d47768e02
   constructor(props) {
     super(props);
     this.state = {
@@ -42,4 +46,4 @@ class AttendingEvents extends Component {
     );
   }
 }
-export default AttendingEvents;
+export default UserEvents;
