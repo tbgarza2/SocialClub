@@ -1,6 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
 // import { hot } from "react-hot-loader";
 import axios from 'axios';
@@ -18,6 +16,7 @@ import Home from './Components/Home.jsx';
 import UserEvents from './Components/UserEvents.jsx';
 import AttendingEvents from './Components/AttendingEvents.jsx';
 import EventPage from './Components/EventPage.jsx';
+import OtherProfile from './Components/OtherProfile';
 
 
 class App extends React.Component {
@@ -32,27 +31,25 @@ class App extends React.Component {
       clickedEventId: '',
       currentId: '',
       currentView: 'Signup',
-      // appView: 'Home',
+      appView: 'Home',
       events: [],
     };
-    // this.createEvent = this.createEvent.bind(this);
+    this.createEvent = this.createEvent.bind(this);
     this.getUserEvents = this.getUserEvents.bind(this);
     this.postUser = this.postUser.bind(this);
     this.getUser = this.getUser.bind(this);
     this.handleUserEventClick = this.handleUserEventClick.bind(this);
+    this.viewOtherProfileClick = this.viewOtherProfileClick.bind(this);
   }
-
 
   getUser() {
     return axios({
       method: 'get',
       url: `api/user/users/${this.state.googleUser.profileObj.email}`,
-    })
-      .then(res => {
-        this.setState({ userId: res.data[0].id });
-      });
+    }).then(res => {
+      this.setState({ userId: res.data[0].id });
+    });
   }
-
 
   getUserEvents() {
     const { userId } = this.state;
@@ -60,6 +57,7 @@ class App extends React.Component {
       method: 'get',
       url: `/api/event/events/${userId}`,
     }).then(res => {
+      console.log(res.data);
       this.setState({ userEvents: res.data });
     });
   }
@@ -76,11 +74,11 @@ class App extends React.Component {
   }
 
   // create event button on click changes appView
-  // createEvent() {
-  //   this.setState({
-  //     appView: 'CreateEvent',
-  //   });
-  // }
+  createEvent() {
+    this.setState({
+      appView: 'CreateEvent',
+    });
+  }
 
   // chat view
   // changeView(view) {
@@ -127,25 +125,30 @@ class App extends React.Component {
 
   handleLinkClick(link) {
     this.setState({ menuOpen: false });
-    // this.setState({ appView: link.val });
+    this.setState({ appView: link.val });
   }
-
 
   handleUserEventClick(event) {
     this.setState({ clickedEventId: event.target.id });
-    // this.setState({ appView: 'EventPage' });
+    this.setState({ appView: 'EventPage' });
+  }
+
+  viewOtherProfileClick(event) {
+    // this.setState({ clickedEventId: event.target.id });
+    debugger;
+    this.setState({ appView: 'OtherProfile' });
   }
 
   render() {
     //
-    const responseGoogle = (response) => {
+    const responseGoogle = response => {
       console.log(response);
     };
     //
-    const onSignIn = (googleUser) => {
+    const onSignIn = googleUser => {
       console.log(googleUser, 'settingstate');
       this.setState({
-        // appView: 'Profile Page',
+        appView: 'Profile Page',
         currentUsername: googleUser.profileObj.name,
         googleUser,
       });
@@ -181,82 +184,97 @@ class App extends React.Component {
       },
     };
     // navbar menu items
-    // const menu = ['Home', 'Created Events', 'RSVP\'d Events', 'Profile Page'];
-    // const menuItems = menu.map((val, index) => {
-    //   return (
-    //     <MenuItem
-    //       key={index}
-    //       delay={`${index * 0.1}s`}
-    //       onClick={() => { this.handleLinkClick({ val }); }}
-    //     >{val}
-    //     </MenuItem>
-    //   );
-    // });
+    const menu = ['Home', 'Created Events', "RSVP'd Events", 'Profile Page'];
+    const menuItems = menu.map((val, index) => {
+      return (
+        <MenuItem
+          key={index}
+          delay={`${index * 0.1}s`}
+          onClick={() => {
+            this.handleLinkClick({ val });
+          }}
+        >
+          {val}
+        </MenuItem>
+      );
+    });
 
-
-    // // App conditional render
-    // let appView = '';
-    // if (this.state.appView === 'Home') {
-    //   appView = <Home viewSummary={this.handleUserEventClick} userId={this.state.userId} handleClick={this.createEvent} />;
-    // } else if (this.state.appView === 'CreateEvent') {
-    //   appView = <CreateEvent currentUser={this.state.currentUsername} googleUser={this.state.googleUser} />;
-    // } else if (this.state.appView === 'Created Events') {
-    //   appView = <UserEvents events={this.state.userEvents} handleClick={this.handleUserEventClick} />;
-    // } else if (this.state.appView === 'RSVP\'d Events') {
-    //   appView = <AttendingEvents />;
-    // } else if (this.state.appView === 'Profile Page') {
-    //   appView = <UserProfile user={this.state.googleUser} userName={this.state.currentUsername} postUser={this.postUser} getUser={this.getUser} getUserEvents={this.getUserEvents} />;
-    // } else if (this.state.appView === 'EventPage') {
-    //   appView = <EventPage eventID={this.state.clickedEventId} googleUser={this.state.googleUser} />;
-    // }
-
-    const menu = [{ name: 'Home', link: '/' }, { name: 'Created Events', link: '/userevents' }, { name: 'RSVP\'d Events', link: '/attendingevents' }, { name: 'Profile Page', link: '/profile' }];
+    // App conditional render
+    let appView = '';
+    if (this.state.appView === 'Home') {
+      appView = (
+        <Home
+          viewSummary={this.handleUserEventClick}
+          userId={this.state.userId}
+          handleClick={this.createEvent}
+        />
+      );
+    } else if (this.state.appView === 'CreateEvent') {
+      appView = (
+        <CreateEvent
+          currentUser={this.state.currentUsername}
+          googleUser={this.state.googleUser}
+        />
+      );
+    } else if (this.state.appView === 'Created Events') {
+      appView = (
+        <UserEvents
+          events={this.state.userEvents}
+          handleClick={this.handleUserEventClick}
+        />
+      );
+    } else if (this.state.appView === "RSVP'd Events") {
+      appView = (
+        <AttendingEvents
+          userId={this.state.userId}
+          handleClick={this.handleUserEventClick}
+        />
+      );
+    } else if (this.state.appView === 'Profile Page') {
+      appView = (
+        <UserProfile
+          user={this.state.googleUser}
+          userName={this.state.currentUsername}
+          postUser={this.postUser}
+          getUser={this.getUser}
+          getUserEvents={this.getUserEvents}
+        />
+      );
+    } else if (this.state.appView === 'EventPage') {
+      appView = (
+        <EventPage
+          eventID={this.state.clickedEventId}
+          googleUser={this.state.googleUser}
+          viewOtherProfileClick={this.viewOtherProfileClick}
+        />
+      );
+    } else if (this.state.appView === 'OtherProfile') {
+      appView = <OtherProfile />;
+    }
 
     return (
       <div>
-        <BrowserRouter>
-          <div className="g-signin2">
-            <GoogleLogin
-              clientId="870155244088-hav8sg0oo71s181ghhetvqdgrssuo8ln.apps.googleusercontent.com"
-              buttonText="Login"
-              onSuccess={onSignIn}
-              onFailure={responseGoogle}
-              cookiePolicy="single_host_origin"
-            />
-          </div>
-          <div style={styles.container}>
-            <MenuButton open={this.state.menuOpen} onClick={() => this.handleMenuClick()} color="white" />
-            <div style={styles.logo}>Social Club</div>
-          </div>
-          <div>
-            <Menu open={this.state.menuOpen}>
-
-              {/* {menuItems} */}
-              {menu.map((val, index) => {
-                return (
-                  <MenuItem
-                    key={index}
-                    delay={`${index * 0.1}s`}
-                    onClick={() => { this.handleLinkClick(); }}
-                  >
-                    <Link to={val.link}>
-                      {val.name}
-                    </Link>
-                  </MenuItem>
-                );
-              })}
-            </Menu>
-          </div>
-          {/* {appView} */}
-          <Switch>
-            <Route exact path="/" render={(routerProps) => (<Home {...routerProps} viewSummary={this.handleUserEventClick} userId={this.state.userId} />)} />
-            <Route exact path="/createevent" render={(routerProps) => (<CreateEvent {...routerProps} currentUser={this.state.currentUsername} googleUser={this.state.googleUser} />)} />
-            <Route exact path="/userevents" render={(routerProps) => (<UserEvents {...routerProps} events={this.state.userEvents} handleClick={this.handleUserEventClick} />)} />
-            <Route exact path="/attendingevents" render={(routerProps) => (<AttendingEvents {...routerProps} userId={this.state.userId} />)} />
-            <Route exact path="/profile" render={(routerProps) => (<UserProfile {...routerProps} user={this.state.googleUser} userName={this.state.currentUsername} postUser={this.postUser} getUser={this.getUser} getUserEvents={this.getUserEvents} />)} />
-            <Route exact path="/eventpage" render={(routerProps) => (<EventPage {...routerProps} eventID={this.state.clickedEventId} googleUser={this.state.googleUser} />)} />
-          </Switch>
-        </BrowserRouter>
+        <div className="g-signin2">
+          <GoogleLogin
+            clientId="870155244088-hav8sg0oo71s181ghhetvqdgrssuo8ln.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={onSignIn}
+            onFailure={responseGoogle}
+            cookiePolicy="single_host_origin"
+          />
+        </div>
+        <div style={styles.container}>
+          <MenuButton
+            open={this.state.menuOpen}
+            onClick={() => this.handleMenuClick()}
+            color="white"
+          />
+          <div style={styles.logo}>Social Club</div>
+        </div>
+        <div>
+          <Menu open={this.state.menuOpen}>{menuItems}</Menu>
+        </div>
+        {appView}
       </div>
     );
   }

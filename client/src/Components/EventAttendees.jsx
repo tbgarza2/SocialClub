@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import UserDetail from './UserDetail.jsx';
 
 class EventAttendees extends Component {
@@ -9,7 +8,10 @@ class EventAttendees extends Component {
   }
 
   showUserProfile() {
-    console.log('clicked on a name');
+    console.log(this.props);
+    console.log('hi');
+    const { viewOtherProfileClick } = this.props;
+    viewOtherProfileClick();
   }
 
   render() {
