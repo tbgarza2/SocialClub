@@ -16,6 +16,7 @@ import Home from './Components/Home.jsx';
 import UserEvents from './Components/UserEvents.jsx';
 import AttendingEvents from './Components/AttendingEvents.jsx';
 import EventPage from './Components/EventPage.jsx';
+import OtherProfile from './Components/OtherProfile';
 
 
 class App extends React.Component {
@@ -38,19 +39,17 @@ class App extends React.Component {
     this.postUser = this.postUser.bind(this);
     this.getUser = this.getUser.bind(this);
     this.handleUserEventClick = this.handleUserEventClick.bind(this);
+    this.viewOtherProfileClick = this.viewOtherProfileClick.bind(this);
   }
-
 
   getUser() {
     return axios({
       method: 'get',
       url: `api/user/users/${this.state.googleUser.profileObj.email}`,
-    })
-      .then(res => {
-        this.setState({ userId: res.data[0].id });
-      });
+    }).then(res => {
+      this.setState({ userId: res.data[0].id });
+    });
   }
-
 
   getUserEvents() {
     const { userId } = this.state;
@@ -129,19 +128,24 @@ class App extends React.Component {
     this.setState({ appView: link.val });
   }
 
-
   handleUserEventClick(event) {
     this.setState({ clickedEventId: event.target.id });
     this.setState({ appView: 'EventPage' });
   }
 
+  viewOtherProfileClick(event) {
+    // this.setState({ clickedEventId: event.target.id });
+    debugger;
+    this.setState({ appView: 'OtherProfile' });
+  }
+
   render() {
     //
-    const responseGoogle = (response) => {
+    const responseGoogle = response => {
       console.log(response);
     };
     //
-    const onSignIn = (googleUser) => {
+    const onSignIn = googleUser => {
       console.log(googleUser, 'settingstate');
       this.setState({
         appView: 'Profile Page',
@@ -180,33 +184,72 @@ class App extends React.Component {
       },
     };
     // navbar menu items
-    const menu = ['Home', 'Created Events', 'RSVP\'d Events', 'Profile Page'];
+    const menu = ['Home', 'Created Events', "RSVP'd Events", 'Profile Page'];
     const menuItems = menu.map((val, index) => {
       return (
         <MenuItem
           key={index}
           delay={`${index * 0.1}s`}
-          onClick={() => { this.handleLinkClick({ val }); }}
-        >{val}
+          onClick={() => {
+            this.handleLinkClick({ val });
+          }}
+        >
+          {val}
         </MenuItem>
       );
     });
 
-
     // App conditional render
     let appView = '';
     if (this.state.appView === 'Home') {
-      appView = <Home viewSummary={this.handleUserEventClick} userId={this.state.userId} handleClick={this.createEvent} />;
+      appView = (
+        <Home
+          viewSummary={this.handleUserEventClick}
+          userId={this.state.userId}
+          handleClick={this.createEvent}
+        />
+      );
     } else if (this.state.appView === 'CreateEvent') {
-      appView = <CreateEvent currentUser={this.state.currentUsername} googleUser={this.state.googleUser} />;
+      appView = (
+        <CreateEvent
+          currentUser={this.state.currentUsername}
+          googleUser={this.state.googleUser}
+        />
+      );
     } else if (this.state.appView === 'Created Events') {
-      appView = <UserEvents events={this.state.userEvents} handleClick={this.handleUserEventClick} />;
-    } else if (this.state.appView === 'RSVP\'d Events') {
-      appView = <AttendingEvents userId={this.state.userId} handleClick={this.handleUserEventClick}/>;
+      appView = (
+        <UserEvents
+          events={this.state.userEvents}
+          handleClick={this.handleUserEventClick}
+        />
+      );
+    } else if (this.state.appView === "RSVP'd Events") {
+      appView = (
+        <AttendingEvents
+          userId={this.state.userId}
+          handleClick={this.handleUserEventClick}
+        />
+      );
     } else if (this.state.appView === 'Profile Page') {
-      appView = <UserProfile user={this.state.googleUser} userName={this.state.currentUsername} postUser={this.postUser} getUser={this.getUser} getUserEvents={this.getUserEvents} />;
+      appView = (
+        <UserProfile
+          user={this.state.googleUser}
+          userName={this.state.currentUsername}
+          postUser={this.postUser}
+          getUser={this.getUser}
+          getUserEvents={this.getUserEvents}
+        />
+      );
     } else if (this.state.appView === 'EventPage') {
-      appView = <EventPage eventID={this.state.clickedEventId} googleUser={this.state.googleUser} />;
+      appView = (
+        <EventPage
+          eventID={this.state.clickedEventId}
+          googleUser={this.state.googleUser}
+          viewOtherProfileClick={this.viewOtherProfileClick}
+        />
+      );
+    } else if (this.state.appView === 'OtherProfile') {
+      appView = <OtherProfile />;
     }
 
     return (
@@ -221,14 +264,15 @@ class App extends React.Component {
           />
         </div>
         <div style={styles.container}>
-          <MenuButton open={this.state.menuOpen} onClick={() => this.handleMenuClick()} color="white" />
+          <MenuButton
+            open={this.state.menuOpen}
+            onClick={() => this.handleMenuClick()}
+            color="white"
+          />
           <div style={styles.logo}>Social Club</div>
         </div>
         <div>
-          <Menu open={this.state.menuOpen}>
-
-            {menuItems}
-          </Menu>
+          <Menu open={this.state.menuOpen}>{menuItems}</Menu>
         </div>
         {appView}
       </div>
