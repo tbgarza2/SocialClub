@@ -29,7 +29,7 @@ CREATE TABLE `status` (
   `status` varchar(20)
 );
 
-CREATE TABLE rsvp (
+CREATE TABLE `rsvp` (
   `user_id` int(10) NOT NULL,
   `event_id` int(10) NOT NULL,
   PRIMARY KEY (`user_id`,`event_id`),
