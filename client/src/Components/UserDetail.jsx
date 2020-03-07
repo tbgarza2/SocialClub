@@ -2,12 +2,13 @@
 import React from 'react';
 import { Link, Switch } from 'react-router-dom';
 
-const UserDetail = ({ holdClickedUser, user, display }) => (
+const UserDetail = ({ holdClickedUser, user, display, userId }) => (
   <div>
     <Link to={{
       pathname: '/otherprofile',
       state: {
         user,
+        userId,
       },
     }}
     >

@@ -103,6 +103,7 @@ class EventPage extends Component {
             holdClickedUser={this.props.holdClickedUser}
             viewOtherProfileClick={this.props.viewOtherProfileClick}
             rsvpUsers={this.state.users}
+            userId={this.props.userId}
           />
         </div>
       </div>

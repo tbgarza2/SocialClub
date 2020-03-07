@@ -423,7 +423,7 @@ class App extends Component {
             <Route exact path="/attendingevents" render={(routerProps) => (<AttendingEvents {...routerProps} handleClick={this.handleUserEventClick} userId={this.state.userId} />)} />
             <Route exact path="/profile" render={(routerProps) => (<UserProfile {...routerProps} user={this.state.user} userName={this.state.userName} postUser={this.postUser} getUser={this.getUser} getUserEvents={this.getUserEvents} />)} />
             <Route exact path="/otherprofile" component={OtherProfile} />
-            <Route exact path="/:eventId" render={(routerProps) => (<EventPage {...routerProps} eventID={this.state.clickedEventId} googleUser={this.state.googleUser} />)} />
+            <Route exact path="/:eventId" render={(routerProps) => (<EventPage {...routerProps} userId={this.state.userId} eventID={this.state.clickedEventId} googleUser={this.state.googleUser} />)} />
           </Switch>
         </BrowserRouter>
       </div>

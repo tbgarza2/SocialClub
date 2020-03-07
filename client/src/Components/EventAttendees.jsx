@@ -21,7 +21,7 @@ class EventAttendees extends Component {
   }
 
   render() {
-    const { rsvpUsers } = this.props;
+    const { rsvpUsers, userId } = this.props;
     return (
       <div>
         <p className="text-center">
@@ -33,6 +33,7 @@ class EventAttendees extends Component {
             key={user.id}
             user={user}
             display={this.showUserProfile}
+            userId={userId}
           />
         ))}
       </div>
