@@ -1,7 +1,8 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import { Link, Switch } from 'react-router-dom';
 
-const UserDetail = ({ user, display }) => (
+const UserDetail = ({ holdClickedUser, user, display }) => (
   <div>
     <Link to={{
       pathname: '/otherprofile',

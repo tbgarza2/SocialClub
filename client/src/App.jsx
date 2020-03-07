@@ -6,7 +6,7 @@ import './App.css';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import MapContainer from './Components/MapContainer.jsx';
-import { onSignIn } from '../dist/script';
+// import { onSignIn } from '../dist/script';
 // Topbar Menu imports
 import MenuItem from './MenuItem.jsx';
 import Menu from './Menu.jsx';
@@ -18,10 +18,10 @@ import Home from './Components/Home.jsx';
 import UserEvents from './Components/UserEvents.jsx';
 import AttendingEvents from './Components/AttendingEvents.jsx';
 import EventPage from './Components/EventPage.jsx';
-import OtherProfile from './Components/OtherProfile';
+import OtherProfile from './Components/OtherProfile.jsx';
 
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,6 +44,7 @@ class App extends React.Component {
     this.postUser = this.postUser.bind(this);
     this.getUser = this.getUser.bind(this);
     this.handleUserEventClick = this.handleUserEventClick.bind(this);
+    this.holdClickedUser = this.holdClickedUser.bind(this);
     this.viewOtherProfileClick = this.viewOtherProfileClick.bind(this);
     this.userInfo = this.userInfo.bind(this);
   }
@@ -178,6 +179,10 @@ class App extends React.Component {
     this.setState({ appView: 'OtherProfile' });
   }
 
+  holdClickedUser() {
+    console.log('holding user');
+  }
+
   render() {
     //
     const responseGoogle = response => {
@@ -239,7 +244,88 @@ class App extends React.Component {
     //   );
     // });
 
-    // // App conditional render
+    // App conditional render
+    // let appView = '';
+    // if (this.state.appView === 'Home') {
+    //   appView = (
+    //     <Home
+    //       viewSummary={this.handleUserEventClick}
+    //       userId={this.state.userId}
+    //       handleClick={this.createEvent}
+    //     />
+    //   );
+    // } else if (this.state.appView === 'CreateEvent') {
+    //   appView = (
+    //     <CreateEvent
+    //       currentUser={this.state.currentUsername}
+    //       googleUser={this.state.googleUser}
+    //     />
+    //   );
+    // } else if (this.state.appView === 'Created Events') {
+    //   appView = (
+    //     <UserEvents
+    //       events={this.state.userEvents}
+    //       handleClick={this.handleUserEventClick}
+    //     />
+    //   );
+    // } else if (this.state.appView === "RSVP'd Events") {
+    //   appView = (
+    //     <AttendingEvents
+    //       userId={this.state.userId}
+    //       handleClick={this.handleUserEventClick}
+    //     />
+    //   );
+    // } else if (this.state.appView === 'Profile Page') {
+    //   appView = (
+    //     <UserProfile
+    //       user={this.state.googleUser}
+    //       userName={this.state.currentUsername}
+    //       postUser={this.postUser}
+    //       getUser={this.getUser}
+    //       getUserEvents={this.getUserEvents}
+    //     />
+    //   );
+    // } else if (this.state.appView === 'EventPage') {
+    //   appView = (
+    //     <EventPage
+    //       eventID={this.state.clickedEventId}
+    //       googleUser={this.state.googleUser}
+    //       holdClickedUser={this.holdClickedUser}
+    //       viewOtherProfileClick={this.viewOtherProfileClick}
+    //     />
+    //   );
+    // } else if (this.state.appView === 'OtherProfile') {
+    //   appView = <OtherProfile />;
+    // }
+
+    // return (
+    //   <div>
+    //     {this.state.currentUsername === ''
+    //       ? (
+    //         <div className="g-signin2">
+    //           <GoogleLogin
+    //             clientId="870155244088-hav8sg0oo71s181ghhetvqdgrssuo8ln.apps.googleusercontent.com"
+    //             buttonText="Login"
+    //             onSuccess={onSignIn}
+    //             onFailure={responseGoogle}
+    //             cookiePolicy="single_host_origin"
+    //           />
+    //         </div>
+    //       )
+    //       : null}
+    //     <div style={styles.container}>
+    //       <MenuButton
+    //         open={this.state.menuOpen}
+    //         onClick={() => this.handleMenuClick()}
+    //         color="white"
+    //       />
+    //       <div style={styles.logo}>Social Club</div>
+    //     </div>
+    //     <div>
+    //       <Menu open={this.state.menuOpen}>{menuItems}</Menu>
+    //     </div>
+    //     {appView}
+    // App conditional render
     // let appView = '';
     // if (this.state.appView === 'Home') {
     //   appView = (

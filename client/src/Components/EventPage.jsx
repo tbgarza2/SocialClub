@@ -100,6 +100,7 @@ class EventPage extends Component {
         {/* <div className="Chat">{view}</div> */}
         <div>
           <EventAttendees
+            holdClickedUser={this.props.holdClickedUser}
             viewOtherProfileClick={this.props.viewOtherProfileClick}
             rsvpUsers={this.state.users}
           />
