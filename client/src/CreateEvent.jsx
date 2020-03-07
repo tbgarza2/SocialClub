@@ -201,7 +201,7 @@ class CreateEvent extends React.Component {
               <label className="col-md-4 control-label" htmlFor="singlebutton" />
               <div className="col-md-4">
                 <Link to="/">
-                  <button id="singlebutton" name="singlebutton" className="btn btn-primary" type="button" onClick={this.handleSubmit}>Sumbit</button>
+                  <button id="singlebutton" name="singlebutton" className="btn btn-primary" type="button" onClick={this.handleSubmit}>Submit</button>
                 </Link>
               </div>
             </div>
