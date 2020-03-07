@@ -6,19 +6,18 @@ class OtherProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userID: 1,
-      user: { name: 'Maybe', id: 4 },
       messageInput: '',
       messages: [],
       openMessages: false,
+      openOrClose: 'Open',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleOpenMessages = this.handleOpenMessages.bind(this);
   }
 
   componentDidMount() {
     this.interval = setInterval(() => this.getMessages(), 1000);
-    console.log('bsudbusd', this.props.location.state.user, this.props.location.state.userId);
   }
 
   componentWillUnmount() {
@@ -26,22 +25,23 @@ class OtherProfile extends Component {
   }
 
   getMessages() {
-    const { user, userID } = this.state;
-    axios.get(`/api/message/${userID}/${user.id}`)
+    const { user, userId } = this.props.location.state;
+    axios.get(`/api/message/${userId}/${user.id}`)
       .then(({ data }) => this.setState({ messages: data }));
   }
 
   handleOpenMessages() {
-    const { openMessages } = this.state;
+    const { openMessages, openOrClose } = this.state;
 
     this.setState({
       openMessages: !openMessages,
+      openOrClose: openOrClose === 'Open' ? 'Close' : 'Open',
     });
   }
 
   handleChange(e) {
     this.setState({
-      message: e.target.value,
+      messageInput: e.target.value,
     });
   }
 
@@ -49,33 +49,68 @@ class OtherProfile extends Component {
     e.preventDefault();
     this.handleMessage();
     this.setState({
-      message: '',
+      messageInput: '',
     });
   }
 
   handleMessage() {
-    const { user, userID, message } = this.state;
-    axios.post(`/api/message/${userID}/${user.id}`, { message })
+    const { messageInput } = this.state;
+    const { user, userId } = this.props.location.state;
+    console.log(messageInput);
+    axios.post(`/api/message/${userId}/${user.id}`, { message: messageInput })
       .then(m => console.log(m))
       .then(() => this.getMessages());
   }
 
   render() {
-    const { user, messages, messageInput } = this.state;
+    const {
+      messages,
+      messageInput,
+      openMessages,
+      openOrClose,
+    } = this.state;
+
+    const { user } = this.props.location.state;
     return (
       <div>
-        <h2>{user.name}</h2>
-        {messages.slice(0).reverse().map(message => (
-          <div>
-            <h4>{message.name}:</h4>
-            <div>{message.message}</div>
+        <div className="profileRender">
+          <h2 className="emailAddy"> Welcome to {user.name}`s profile!</h2>
+          <div id="email" className="col-sm-4">.</div>
+          <div id="name" className="col-sm-4"> {user.name}</div>
+          <div id="email" className="col-sm-4">.</div>
+
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <button className="btn btn-outline-primary btn-lg" data-toggle="button" aria-pressed="false" autocomplete="off" onClick={this.handleOpenMessages}>{openOrClose} Messages</button>
+        </div>
+        {openMessages && (
+          <div style={{ marginLeft: 150, marginRight: 150 }}>
+            <br />
+            <div className="input-group">
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ paddingBottom: '5px' }}>
+                  <button className="btn btn-primary" onClick={this.handleSubmit}>Send</button>
+                </div>
+                <textarea className="form-control" type="text" onChange={this.handleChange} value={messageInput} />
+              </div>
+            </div>
+            <br />
+            <div>
+              <ul className="list-group">
+                {messages.slice(0).map(message => (
+                  <div key={message.id_message}>
+                    <li className="list-group-item">
+                      <h4 className="list-group-item active">{message.name}:</h4>
+                      <div className="list-group-item">{message.message}</div>
+                    </li>
+                  </div>
+                ))}
+              </ul>
+            </div>
           </div>
-        ))}
-        <input type="text" onChange={this.handleChange} value={messageInput} />
-        <button onClick={this.handleSubmit}>Send</button>
+        )}
       </div>
     );
   }
 }
-
 export default OtherProfile;
