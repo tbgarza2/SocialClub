@@ -4,7 +4,7 @@ import './App.css';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import MapContainer from './Components/MapContainer.jsx';
-import { onSignIn } from '../dist/script';
+// import { onSignIn } from '../dist/script';
 // Topbar Menu imports
 import MenuItem from './MenuItem.jsx';
 import Menu from './Menu.jsx';
@@ -16,10 +16,10 @@ import Home from './Components/Home.jsx';
 import UserEvents from './Components/UserEvents.jsx';
 import AttendingEvents from './Components/AttendingEvents.jsx';
 import EventPage from './Components/EventPage.jsx';
-import OtherProfile from './Components/OtherProfile';
+import OtherProfile from './Components/OtherProfile.jsx';
 
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,6 +39,7 @@ class App extends React.Component {
     this.postUser = this.postUser.bind(this);
     this.getUser = this.getUser.bind(this);
     this.handleUserEventClick = this.handleUserEventClick.bind(this);
+    this.holdClickedUser = this.holdClickedUser.bind(this);
     this.viewOtherProfileClick = this.viewOtherProfileClick.bind(this);
   }
 
@@ -133,10 +134,12 @@ class App extends React.Component {
     this.setState({ appView: 'EventPage' });
   }
 
-  viewOtherProfileClick(event) {
-    // this.setState({ clickedEventId: event.target.id });
-    debugger;
+  viewOtherProfileClick() {
     this.setState({ appView: 'OtherProfile' });
+  }
+
+  holdClickedUser() {
+    console.log('holding user');
   }
 
   render() {
@@ -245,6 +248,7 @@ class App extends React.Component {
         <EventPage
           eventID={this.state.clickedEventId}
           googleUser={this.state.googleUser}
+          holdClickedUser={this.holdClickedUser}
           viewOtherProfileClick={this.viewOtherProfileClick}
         />
       );
@@ -254,15 +258,19 @@ class App extends React.Component {
 
     return (
       <div>
-        <div className="g-signin2">
-          <GoogleLogin
-            clientId="870155244088-hav8sg0oo71s181ghhetvqdgrssuo8ln.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={onSignIn}
-            onFailure={responseGoogle}
-            cookiePolicy="single_host_origin"
-          />
-        </div>
+        {this.state.currentUsername === ''
+          ? (
+            <div className="g-signin2">
+              <GoogleLogin
+                clientId="870155244088-hav8sg0oo71s181ghhetvqdgrssuo8ln.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={onSignIn}
+                onFailure={responseGoogle}
+                cookiePolicy="single_host_origin"
+              />
+            </div>
+          )
+          : null}
         <div style={styles.container}>
           <MenuButton
             open={this.state.menuOpen}
