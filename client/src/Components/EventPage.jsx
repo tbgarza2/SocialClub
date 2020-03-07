@@ -25,6 +25,7 @@ class EventPage extends Component {
     // console.log('BON', eventID, 'BON', this.props.match.params.eventId);
     // const { users } = this.state;
     const eventID = this.props.match.params.eventId;
+    const { userId } = this.props;
 
     axios({
       method: 'get',
@@ -33,7 +34,7 @@ class EventPage extends Component {
       this.setState({ eventData: res.data[0] });
     });
     axios
-      .get(`/api/rsvp/rsvp/conf/${eventID}`)
+      .get(`/api/rsvp/rsvp/conf/${eventID}/${userId}`)
       .then(rsvpUsers => {
         console.log('rsvp list grabbed');
         this.setState({
