@@ -1,10 +1,19 @@
 import React from 'react';
+import { Link, Switch } from 'react-router-dom';
 
 const UserDetail = ({ user, display }) => (
   <div>
-    <li style={{ listStyleType: 'none' }}>{user.name}</li>
-    <button onClick={display}>Profile</button>
+    <Link to={{
+      pathname: '/otherprofile',
+      state: {
+        user,
+      },
+    }}
+    >
+      <li style={{ listStyleType: 'none' }}>{user.name}</li>
+    </Link>
   </div>
 );
+// this.props.location.state.user
 
 export default UserDetail;
