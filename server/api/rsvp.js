@@ -11,8 +11,8 @@ rsvpRouter.post('/rsvp/:event_id/:user_id', (req, res) => {
     .then(() => {
       res.send(`user id of ${user_id} has rsvp'd to ${event_id}`);
     })
-    .catch(() => {
-      res.send('could not RSVP user');
+    .catch((error) => {
+      res.send('could not RSVP user', error);
     });
 });
 

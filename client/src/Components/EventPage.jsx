@@ -21,8 +21,11 @@ class EventPage extends Component {
   }
 
   componentDidMount() {
-    const { eventID } = this.props;
-    const { users } = this.state;
+    // const eventID = this.props.eventID || this.props.location.state.userID;
+    // console.log('BON', eventID, 'BON', this.props.match.params.eventId);
+    // const { users } = this.state;
+    const eventID = this.props.match.params.eventId;
+
     axios({
       method: 'get',
       url: `api/event/events/page/${eventID}`,
@@ -97,8 +100,10 @@ class EventPage extends Component {
         {/* <div className="Chat">{view}</div> */}
         <div>
           <EventAttendees
+            holdClickedUser={this.props.holdClickedUser}
             viewOtherProfileClick={this.props.viewOtherProfileClick}
             rsvpUsers={this.state.users}
+            userId={this.props.userId}
           />
         </div>
       </div>

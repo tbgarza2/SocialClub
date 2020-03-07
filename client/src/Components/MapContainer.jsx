@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 import {
   Map, GoogleApiWrapper, Marker, InfoWindow,
 } from 'google-maps-react';
@@ -35,6 +36,7 @@ class MapContainer extends Component {
   }
 
   onMarkerClick(props, marker) {
+    console.log('Cowboy', props);
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -55,19 +57,21 @@ class MapContainer extends Component {
     const { selectedPlace, activeMarker } = this.state;
     const infoWindow = (
       <div>
-        <h3>{selectedPlace.name}</h3>
-        <p>Address: {selectedPlace.address}</p>
-        <p>Time: {selectedPlace.time}</p>
-        <p>Category: {selectedPlace.category}</p>
-        <p>Summary: {selectedPlace.summary}</p>
-        <button onClick={this.handleJoinClick}>JOIN</button>
-        <button
-          onClick={() => {
-            this.handleViewClick({ target: { id: activeMarker.id } });
-          }}
-        >
-          VIEW EVENT
-        </button>
+        <div>
+          <h3>{selectedPlace.name}</h3>
+          <p>Address: {selectedPlace.address}</p>
+          <p>Time: {selectedPlace.time}</p>
+          <p>Category: {selectedPlace.category}</p>
+          <p>Summary: {selectedPlace.summary}</p>
+          <button onClick={this.handleJoinClick}>JOIN</button>
+          {/* <button
+            onClick={() => {
+              this.handleViewClick({ target: { id: activeMarker.id } });
+            }}
+          >
+            VIEW EVENT
+          </button> */}
+        </div>
       </div>
     );
     ReactDOM.render(

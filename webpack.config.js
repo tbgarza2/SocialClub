@@ -29,7 +29,8 @@ module.exports = {
     contentBase: path.join(__dirname, "public/"),
     port: 8080,
     publicPath: "http://localhost:8080/dist/",
-    hotOnly: true
+    hotOnly: true,
+    historyApiFallback: true,
   },
   
   

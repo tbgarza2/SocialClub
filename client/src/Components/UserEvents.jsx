@@ -1,20 +1,56 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 
 class UserEvents extends Component {
   constructor(props) {
     super(props);
+    this.State = {
+      userEvents: [],
+    };
   }
 
+  // UNSAFE_componentWillMount() {
+  //   if (localStorage.getItem('userEvents')) {
+  //     this.setState({
+  //       events: JSON.parse(localStorage.getItem('userEvents')),
+  //     });
+  //   }
+  // }
+
+  // componentDidMount() {
+  //   if (!localStorage.getItem('userEvents')) {
+  //     this.setState({
+  //       events: this.props.userEvents,
+  //     });
+  //   }
+  // }
+
+  // UNSAFE_componentWillUpdate(nextProps, nextState) {
+  //   localStorage.setItem('userEvents', JSON.stringify(nextState.events));
+  // }
+
   render() {
+    const events = this.props.userEvents || this.state.userEvents;
     return (
       <div>
-        <h3>Events You Created</h3>
+        <p className="text-center">
+          <h3>Events You Created</h3>
+        </p>
         <ul>
-          {this.props.events.map(event => (
-            <li key={event.id} id={event.id} onClick={this.props.handleClick}>
-              {event.name}
-            </li>
+          {events.map((event, index) => (
+            <Link to={{
+              pathname: `/${event.id}`,
+              state: {
+                eventID: event.id,
+              },
+            }}
+            >
+              <li key={event.id} id={event.id} onClick={this.props.handleClick}>
+                {event.name}
+              </li>
+            </Link>
           ))}
         </ul>
       </div>

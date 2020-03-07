@@ -28,6 +28,13 @@ app.use('/api/twilio', twilioRouter);
 //   key: '42ade2ac-932c-4653-9ce2-d0807ef066ef:rQ7Fb9xKgW/sQDI2OypBm5HdpPdAGDsFij8mQTcPMvk=',
 // })
 
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
 app.listen(PORT, () => {
   console.log(`Listening on :${PORT} 🚀`);
