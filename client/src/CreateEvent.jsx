@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class CreateEvent extends React.Component {
   constructor(props) {
@@ -200,7 +201,9 @@ class CreateEvent extends React.Component {
             <div className="form-group">
               <label className="col-md-4 control-label" htmlFor="singlebutton" />
               <div className="col-md-4">
-                <button id="singlebutton" name="singlebutton" className="btn btn-primary" type="button" onClick={this.handleSubmit}>Sumbit</button>
+                <Link to="/">
+                  <button id="singlebutton" name="singlebutton" className="btn btn-primary" type="button" onClick={this.handleSubmit}>Sumbit</button>
+                </Link>
               </div>
             </div>
 
