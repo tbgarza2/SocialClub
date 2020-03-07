@@ -154,22 +154,22 @@ class MapContainer extends Component {
     };
     const { google } = this.props;
     const { eventCords, activeMarker, showingInfoWindow, events, filterByAddress, filterByEvent } = this.state;
-    const addresses = events.map(event => {
+    const addresses = events.filter(event => event.address !== undefined).map(event => {
       const arr = event.address.split(',');
       const address = arr[0].trim();
       return address;
     });
-    const cities = events.map(event => {
+    const cities = events.filter(event => event.address !== undefined).map(event => {
       const arr = event.address.split(',');
       const city = arr[1].trim();
       return city;
     });
-    const states = events.map(event => {
+    const states = events.filter(event => event.address !== undefined).map(event => {
       const arr = event.address.split(',');
       const state = arr[arr.length - 1].trim().slice(0, 2);
       return state;
     });
-    const categories = events.map(event => event.category);
+    const categories = events.filter(event => event.category !== undefined).map(event => event.category);
 
     return (
       <div>
