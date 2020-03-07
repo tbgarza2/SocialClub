@@ -59,19 +59,19 @@ const userAttends = (user_id) => {
   return query(sqlQuery, [user_id]);
 };
 
-const rsvpUsers = event_id => {
+const rsvpUsers = (event_id, user_id) => {
   const mysqlquery = `
     SELECT * FROM
       (
-        SELECT users.id, users.name
+        SELECT users.id, users.name, users.email
         FROM rsvp
         INNER JOIN users
         ON users.id = rsvp.user_id
-        WHERE rsvp.event_id = ?
+        WHERE rsvp.event_id = ? AND users.id != ?
       )
     AS rsvp_users;
     `;
-  return query(mysqlquery, [event_id]);
+  return query(mysqlquery, [event_id, user_id]);
 };
 
 const sendMessage = (id_sender, id_recipient, message) => {
@@ -97,7 +97,8 @@ const getMessages = (id_sender, id_recipient) => {
         WHERE message.id_sender = ? AND message.id_recipient = ?
       )
     AS all_messages
-    ORDER BY created_at;`;
+    ORDER BY -created_at
+    LIMIT 15;`;
   return query(mysqlQuery, [id_sender, id_recipient, id_sender, id_recipient]);
 };
 

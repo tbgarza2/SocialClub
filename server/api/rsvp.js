@@ -29,9 +29,10 @@ rsvpRouter.get('/rsvp/:user_id', (req, res) => {
 });
 
 // get all users rsvp's to a specific event
-rsvpRouter.get('/rsvp/conf/:event_id', (req, res) => {
-  console.log(req.params);
-  rsvpUsers(req.params.event_id)
+rsvpRouter.get('/rsvp/conf/:event_id/:user_id', (req, res) => {
+  // console.log(req.params);
+  const { event_id, user_id } = req.params;
+  rsvpUsers(event_id, user_id)
     .then(users => {
       console.log(users);
       res.send(users);
