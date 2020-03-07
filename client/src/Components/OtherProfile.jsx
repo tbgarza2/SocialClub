@@ -75,9 +75,9 @@ class OtherProfile extends Component {
       <div>
         <div className="profileRender">
           <h2 className="emailAddy"> Welcome to {user.name}`s profile!</h2>
-          <div id="email" className="col-sm-4">.</div>
+          <div id="email" className="col-sm-4">{user.email}</div>
           <div id="name" className="col-sm-4"> {user.name}</div>
-          <div id="email" className="col-sm-4">.</div>
+          <div id="email" className="col-sm-4">{user.email}</div>
 
         </div>
         <div style={{ textAlign: 'center' }}>
