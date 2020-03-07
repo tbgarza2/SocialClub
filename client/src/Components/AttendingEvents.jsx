@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link, Route } from 'react-router-dom';
 
-<<<<<<< HEAD
-class AttendingEvents extends Component {
-=======
 class UserEvents extends Component {
->>>>>>> 45ecec6a7a1facacaa69a79a26c7783d47768e02
   constructor(props) {
     super(props);
     this.state = {
@@ -37,7 +34,15 @@ class UserEvents extends Component {
         <ul>
           {this.state.rsvpEvents.map(event => (
             <li key={event.id} id={event.id} onClick={handleClick}>
-              {event.name}
+              <Link to={{
+                pathname: `/${event.id}`,
+                state: {
+                  eventID: event.id,
+                },
+              }}
+              >
+                {event.name}
+              </Link>
             </li>
           ))}
         </ul>
