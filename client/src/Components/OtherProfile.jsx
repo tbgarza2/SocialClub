@@ -21,6 +21,7 @@ class OtherProfile extends Component {
   componentDidMount() {
     console.log(this.props);
     this.interval = setInterval(() => this.getMessages(), 1000);
+    console.log('bsudbusd', this.props.location.state.user);
   }
 
   componentWillUnmount() {

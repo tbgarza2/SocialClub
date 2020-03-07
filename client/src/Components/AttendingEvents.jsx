@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link, Route } from 'react-router-dom';
 
 class UserEvents extends Component {
   constructor(props) {
@@ -33,7 +34,15 @@ class UserEvents extends Component {
         <ul>
           {this.state.rsvpEvents.map(event => (
             <li key={event.id} id={event.id} onClick={handleClick}>
-              {event.name}
+              <Link to={{
+                pathname: `/${event.id}`,
+                state: {
+                  eventID: event.id,
+                },
+              }}
+              >
+                {event.name}
+              </Link>
             </li>
           ))}
         </ul>

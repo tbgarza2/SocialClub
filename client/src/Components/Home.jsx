@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import MapContainer from './MapContainer';
 
 class Home extends Component {
@@ -17,7 +18,9 @@ class Home extends Component {
     return (
       <div>
         <MapContainer viewSummary={viewSummary} userId={userId} />
-        <button type="button" className="btn btn-primary" type="button" style={styles.button} onClick={this.props.handleClick}>Create an event!</button>
+        <Link to="/createevent">
+          <button type="button" className="btn btn-primary" style={styles.button}>Create an event!</button>
+        </Link>
       </div>
     );
   }
