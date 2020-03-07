@@ -14,28 +14,28 @@ class UserProfile extends Component {
     this.signOut = this.signOut.bind(this);
   }
 
-  UNSAFE_componentWillMount() {
-    if (localStorage.getItem('user')) {
-      this.setState({
-        user: JSON.parse(localStorage.getItem('user')),
-        userName: JSON.parse(localStorage.getItem('userName')),
-      });
-    }
-  }
+  // UNSAFE_componentWillMount() {
+  //   if (localStorage.getItem('user')) {
+  //     this.setState({
+  //       user: JSON.parse(localStorage.getItem('user')),
+  //       userName: JSON.parse(localStorage.getItem('userName')),
+  //     });
+  //   }
+  // }
 
-  componentDidMount() {
-    if (!localStorage.getItem('user')) {
-      this.setState({
-        user: this.props.user,
-        userName: this.props.userName,
-      });
-    }
-  }
+  // componentDidMount() {
+  //   if (!localStorage.getItem('user')) {
+  //     this.setState({
+  //       user: this.props.user,
+  //       userName: this.props.userName,
+  //     });
+  //   }
+  // }
 
-  UNSAFE_componentWillUpdate(nextProps, nextState) {
-    localStorage.setItem('user', JSON.stringify(nextState.user));
-    localStorage.setItem('userName', JSON.stringify(nextState.userName));
-  }
+  // UNSAFE_componentWillUpdate(nextProps, nextState) {
+  //   localStorage.setItem('user', JSON.stringify(nextState.user));
+  //   localStorage.setItem('userName', JSON.stringify(nextState.userName));
+  // }
 
   signOut() {
     const auth2 = gapi.auth2.getAuthInstance();
