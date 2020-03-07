@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -34,7 +35,9 @@ class UserEvents extends Component {
     const events = this.props.userEvents || this.state.userEvents;
     return (
       <div>
-        <h3>Events You Created</h3>
+        <p className="text-center">
+          <h3>Events You Created</h3>
+        </p>
         <ul>
           {events.map((event, index) => (
             <Link to={{
@@ -44,9 +47,9 @@ class UserEvents extends Component {
               },
             }}
             >
-            <li key={event.id} id={event.id} onClick={this.props.handleClick}>
-              {event.name}
-            </li>
+              <li key={event.id} id={event.id} onClick={this.props.handleClick}>
+                {event.name}
+              </li>
             </Link>
           ))}
         </ul>

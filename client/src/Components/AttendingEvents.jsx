@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { Link, Route } from 'react-router-dom';
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+import React, { Component } from "react";
+import axios from "axios";
+import { Link, Route } from "react-router-dom";
 
 class UserEvents extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rsvpEvents: [],
+      rsvpEvents: []
     };
   }
 
@@ -34,12 +35,13 @@ class UserEvents extends Component {
         <ul>
           {this.state.rsvpEvents.map(event => (
             <li key={event.id} id={event.id} onClick={handleClick}>
-              <Link to={{
-                pathname: `/${event.id}`,
-                state: {
-                  eventID: event.id,
-                },
-              }}
+              <Link
+                to={{
+                  pathname: `/${event.id}`,
+                  state: {
+                    eventID: event.id
+                  }
+                }}
               >
                 {event.name}
               </Link>
