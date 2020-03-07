@@ -9,15 +9,15 @@
 // };
 
 module.exports = {
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'socialclub',
-    // socketPath: '/cloudsql/team4ahalfstar:us-central1:team4ahalfstar'
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'socialclub',
+// socketPath: '/cloudsql/team4ahalfstar:us-central1:team4ahalfstar'
 };
 //     // host: '34.70.53.155',
 //     user: 'team4ahalfstar',
-//     password: 'team4ahalfstar',
+//     password: '',
 //     database: 'socialclub',
 //     socketPath: '/cloudsql/team4ahalfstar:us-central1:team4ahalfstar'
 // };
