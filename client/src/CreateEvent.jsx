@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class CreateEvent extends React.Component {
   constructor(props) {
@@ -31,13 +32,11 @@ class CreateEvent extends React.Component {
     console.log('pippy', this.props.userEvents.length);
     console.log('clicked');
     this.props.getUserEvents();
-    const { phones } = this.state;
+    // const { phones } = this.state;
+    const { name, address, date, category, summary, phones } = this.state;
     if (phones.length) {
-      phones.forEach(phone => this.sendTwilio(phone));
+      phones.forEach(phone => this.sendTwilio(phone, name));
     }
-    const {
-      name, address, date, category, summary,
-    } = this.state;
     axios({
       method: 'post',
       url: 'api/event/events',
@@ -60,11 +59,12 @@ class CreateEvent extends React.Component {
   }
 
 
-  sendTwilio(phone) {
+  sendTwilio(phone, name) {
+    console.log('vivy');
     const num = this.props.userEvents.length + 1;
     const message = {
       to: `+1${phone}`,
-      body: `http://localhost:8080/${num}`,
+      body: `Check out the event ${name} I created! http://localhost:8080/${num}`,
     };
 
     fetch('/api/twilio', {
@@ -200,7 +200,9 @@ class CreateEvent extends React.Component {
             <div className="form-group">
               <label className="col-md-4 control-label" htmlFor="singlebutton" />
               <div className="col-md-4">
-                <button id="singlebutton" name="singlebutton" className="btn btn-primary" type="button" onClick={this.handleSubmit}>Sumbit</button>
+                <Link to="/">
+                  <button id="singlebutton" name="singlebutton" className="btn btn-primary" type="button" onClick={this.handleSubmit}>Submit</button>
+                </Link>
               </div>
             </div>
 
