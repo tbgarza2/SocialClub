@@ -65,7 +65,7 @@ class CreateEvent extends React.Component {
     const num = this.props.userEvents.length + 1;
     const message = {
       to: `+1${phone}`,
-      body: `http://localhost:8080/${num}`,
+      body: `Check out this event I created! http://localhost:8080/${num}`,
     };
 
     fetch('/api/twilio', {
