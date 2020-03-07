@@ -385,7 +385,7 @@ class App extends Component {
         <BrowserRouter>
           <div className="g-signin2">
             <GoogleLogin
-              clientId="870155244088-hav8sg0oo71s181ghhetvqdgrssuo8ln.apps.googleusercontent.com"
+              clientId="186824799992-hbqrmbhhj4nmr79b52r1l5klsrc6du02.apps.googleusercontent.com"
               buttonText="Login"
               onSuccess={onSignIn}
               onFailure={responseGoogle}

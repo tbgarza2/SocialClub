@@ -15,7 +15,7 @@ module.exports = {
 //   database: 'socialclub',
 // };
   host: '34.70.53.155',
-  user: 'team4ahalfstar',
+  user: 'root',
   password: '',
   database: 'socialclub',
 };
