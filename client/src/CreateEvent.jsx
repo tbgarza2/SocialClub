@@ -12,6 +12,8 @@ class CreateEvent extends React.Component {
       category: '',
       summary: '',
       phones: [],
+      // getUserEvents: '',
+      // userEvents: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleName = this.handleName.bind(this);
@@ -26,13 +28,9 @@ class CreateEvent extends React.Component {
   }
 
   handleSubmit() {
-    const {
-      name, address, date, category, summary,
-    } = this.state;
-  }
-
-  handleSubmit() {
+    console.log('pippy', this.props.userEvents.length);
     console.log('clicked');
+    this.props.getUserEvents();
     const { phones } = this.state;
     if (phones.length) {
       phones.forEach(phone => this.sendTwilio(phone));
@@ -54,21 +52,19 @@ class CreateEvent extends React.Component {
       },
     });
 
-    // axios({
-    //   method: 'post',
-    //   url: 'api/chatkit/rooms',
-    //   data: {
-    //     id: name,
-    //     creatorId: this.props.googleUser.profileObj.email,
-    //     name: name,
-    //   }
-    // });
+    // if (this.props.getUserEvents) {
+    //   this.props.getUserEvents();
+    // } else {
+    //   this.state.getUserEvents();
+    // }
   }
 
+
   sendTwilio(phone) {
+    const num = this.props.userEvents.length + 1;
     const message = {
       to: `+1${phone}`,
-      body: 'lollipop',
+      body: `http://localhost:8080/${num}`,
     };
 
     fetch('/api/twilio', {

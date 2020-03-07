@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
+import { Link, Route } from "react-router-dom";
 
-class AttendingEvents extends Component {
+class UserEvents extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rsvpEvents: [],
+      rsvpEvents: []
     };
   }
 
@@ -30,25 +31,26 @@ class AttendingEvents extends Component {
     const { handleClick } = this.props;
     return (
       <div>
-        <p className="text-center">
-          <h3>Your RSVP Events!!</h3>
-        </p>
+        <h3>Your RSVP Events!!</h3>
         <ul>
           {this.state.rsvpEvents.map(event => (
-            <div>
-              <div>
-                <button type="button" className="btn btn-info">
-                  <li key={event.id} id={event.id} onClick={handleClick}>
-                    {event.name}
-                  </li>
-                </button>
-              </div>
-              <br />
-            </div>
+            <li key={event.id} id={event.id} onClick={handleClick}>
+              <Link
+                to={{
+                  pathname: `/${event.id}`,
+                  state: {
+                    eventID: event.id
+                  }
+                }}
+              >
+                {event.name}
+              </Link>
+            </li>
           ))}
         </ul>
+        {/* HelloWorld */}
       </div>
     );
   }
 }
-export default AttendingEvents;
+export default UserEvents;
