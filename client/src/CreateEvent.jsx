@@ -32,13 +32,11 @@ class CreateEvent extends React.Component {
     console.log('pippy', this.props.userEvents.length);
     console.log('clicked');
     this.props.getUserEvents();
-    const { phones } = this.state;
+    // const { phones } = this.state;
+    const { name, address, date, category, summary, phones } = this.state;
     if (phones.length) {
-      phones.forEach(phone => this.sendTwilio(phone));
+      phones.forEach(phone => this.sendTwilio(phone, name));
     }
-    const {
-      name, address, date, category, summary,
-    } = this.state;
     axios({
       method: 'post',
       url: 'api/event/events',
@@ -61,11 +59,12 @@ class CreateEvent extends React.Component {
   }
 
 
-  sendTwilio(phone) {
+  sendTwilio(phone, name) {
+    console.log('vivy');
     const num = this.props.userEvents.length + 1;
     const message = {
       to: `+1${phone}`,
-      body: `Check out this event I created! http://localhost:8080/${num}`,
+      body: `Check out the event ${name} I created! http://localhost:8080/${num}`,
     };
 
     fetch('/api/twilio', {
