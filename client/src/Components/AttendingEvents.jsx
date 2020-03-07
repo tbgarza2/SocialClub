@@ -1,7 +1,8 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { Component } from 'react';
 import axios from 'axios';
 
-class UserEvents extends Component {
+class AttendingEvents extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,17 +30,25 @@ class UserEvents extends Component {
     const { handleClick } = this.props;
     return (
       <div>
-        <h3>Your RSVP Events!!</h3>
+        <p className="text-center">
+          <h3>Your RSVP Events!!</h3>
+        </p>
         <ul>
           {this.state.rsvpEvents.map(event => (
-            <li key={event.id} id={event.id} onClick={handleClick}>
-              {event.name}
-            </li>
+            <div>
+              <div>
+                <button type="button" className="btn btn-info">
+                  <li key={event.id} id={event.id} onClick={handleClick}>
+                    {event.name}
+                  </li>
+                </button>
+              </div>
+              <br />
+            </div>
           ))}
         </ul>
-        {/* HelloWorld */}
       </div>
     );
   }
 }
-export default UserEvents;
+export default AttendingEvents;
