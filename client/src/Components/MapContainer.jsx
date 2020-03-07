@@ -169,9 +169,9 @@ class MapContainer extends Component {
 
     return (
       <div>
-        <div className="d-flex flex-md-row">
-          <h2>Filter Map</h2>
-          <div className="form-group">
+        <div className="d-flex flex-md-row selectors">
+          <h3>Filter Map</h3>
+          <div className="form-group selector">
             <label className="control-label" htmlFor="category">Address</label>
             <div>
               <select id="address" name="address" value={filterByAddress} onChange={this.handleFilterAddress}>
@@ -180,7 +180,7 @@ class MapContainer extends Component {
               </select>
             </div>
           </div>
-          <div className="form-group">
+          <div className="form-group selector">
             <label className="control-label" htmlFor="category">City</label>
             <div>
               <select id="city" name="city" value={filterByAddress} onChange={this.handleFilterAddress}>
@@ -189,7 +189,7 @@ class MapContainer extends Component {
               </select>
             </div>
           </div>
-          <div className="form-group">
+          <div className="form-group selector">
            <label className="control-label" htmlFor="category">State</label>
             <div>
               <select id="state" name="state" value={filterByAddress} onChange={this.handleFilterAddress}>
@@ -198,7 +198,7 @@ class MapContainer extends Component {
               </select>
             </div>
           </div>
-          <div className="form-group">
+          <div className="form-group selector">
             <label className="control-label" htmlFor="category">Event</label>
             <div>
               <select id="event" name="event" value={filterByEvent} onChange={this.handleFilterEvent}>
