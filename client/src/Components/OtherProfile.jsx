@@ -6,8 +6,6 @@ class OtherProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userID: 1,
-      user: { name: 'Maybe', id: 4, email: 'Yeet@Gmail.com' },
       messageInput: '',
       messages: [],
       openMessages: false,
@@ -19,9 +17,7 @@ class OtherProfile extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     this.interval = setInterval(() => this.getMessages(), 1000);
-    console.log('bsudbusd', this.props.location.state.user, this.props.location.state.userId);
   }
 
   componentWillUnmount() {
@@ -29,8 +25,8 @@ class OtherProfile extends Component {
   }
 
   getMessages() {
-    const { user, userID } = this.state;
-    axios.get(`/api/message/${userID}/${user.id}`)
+    const { user, userId } = this.props.location.state;
+    axios.get(`/api/message/${userId}/${user.id}`)
       .then(({ data }) => this.setState({ messages: data }));
   }
 
@@ -58,39 +54,45 @@ class OtherProfile extends Component {
   }
 
   handleMessage() {
-    const { user, userID, messageInput } = this.state;
+    const { messageInput } = this.state;
+    const { user, userId } = this.props.location.state;
     console.log(messageInput);
-    axios.post(`/api/message/${userID}/${user.id}`, { message: messageInput })
+    axios.post(`/api/message/${userId}/${user.id}`, { message: messageInput })
       .then(m => console.log(m))
       .then(() => this.getMessages());
   }
 
   render() {
     const {
-      user,
       messages,
       messageInput,
       openMessages,
-      openOrClose
+      openOrClose,
     } = this.state;
+
+    const { user } = this.props.location.state;
     return (
       <div>
         <div className="profileRender">
           <h2 className="emailAddy"> Welcome to {user.name}`s profile!</h2>
-          <div id="email" className="col-sm-4"> {user.email}</div>
+          <div id="email" className="col-sm-4">.</div>
           <div id="name" className="col-sm-4"> {user.name}</div>
-          <div id="email" className="col-sm-4"> {user.email}</div>
+          <div id="email" className="col-sm-4">.</div>
 
         </div>
         <div style={{ textAlign: 'center' }}>
-          <button onClick={this.handleOpenMessages}>{openOrClose} Messages</button>
+          <button className="btn btn-outline-primary btn-lg" data-toggle="button" aria-pressed="false" autocomplete="off" onClick={this.handleOpenMessages}>{openOrClose} Messages</button>
         </div>
         {openMessages && (
           <div style={{ marginLeft: 150, marginRight: 150 }}>
             <br />
-            <div style={{ textAlign: 'center' }}>
-              <button onClick={this.handleSubmit}>Send</button>
-              <input type="text" onChange={this.handleChange} value={messageInput} />
+            <div className="input-group">
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ paddingBottom: '5px' }}>
+                  <button className="btn btn-primary" onClick={this.handleSubmit}>Send</button>
+                </div>
+                <textarea className="form-control" type="text" onChange={this.handleChange} value={messageInput} />
+              </div>
             </div>
             <br />
             <div>
