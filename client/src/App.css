@@ -32,6 +32,13 @@
     width: 90%;
   }
 }
+.selectors {
+  padding: 10px;
+}
+
+.selector {
+  padding: 20px;
+}
 
 /* chat */
 .Chat {
