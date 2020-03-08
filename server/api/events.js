@@ -9,7 +9,15 @@ const {
 } = require('../db/index.js');
 
 eventRouter.post('/events', (req, res) => {
-  saveEvent(req.body);
+  saveEvent(req.body)
+    .then(event => {
+      console.log('event created');
+      console.log(event.insertId);
+      res.send(201, event.insertId);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 eventRouter.get('/events/:id', (req, res) => {

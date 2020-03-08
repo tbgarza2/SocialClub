@@ -29,14 +29,10 @@ class CreateEvent extends React.Component {
   }
 
   handleSubmit() {
-    console.log('pippy', this.props.userEvents.length);
-    console.log('clicked');
     this.props.getUserEvents();
-    // const { phones } = this.state;
-    const { name, address, date, category, summary, phones } = this.state;
-    if (phones.length) {
-      phones.forEach(phone => this.sendTwilio(phone, name));
-    }
+    const {
+      name, address, date, category, summary,
+    } = this.state;
     axios({
       method: 'post',
       url: 'api/event/events',
@@ -49,7 +45,13 @@ class CreateEvent extends React.Component {
         creator: this.props.currentUser,
         roomID: name,
       },
-    });
+    })
+      .then(({ data }) => {
+        const { phones } = this.state;
+        if (phones.length) {
+          phones.forEach(phone => this.sendTwilio(phone, data));
+        }
+      });
 
     // if (this.props.getUserEvents) {
     //   this.props.getUserEvents();
@@ -59,12 +61,12 @@ class CreateEvent extends React.Component {
   }
 
 
-  sendTwilio(phone, name) {
-    console.log('vivy');
-    const num = this.props.userEvents.length + 1;
+  sendTwilio(phone, id) {
+    // const num = this.props.userEvents.length + 1;
+    const { name } = this.state;
     const message = {
       to: `+1${phone}`,
-      body: `Check out the event ${name} I created! https://team4ahalfstar.appspot.com/${num}`,
+      body: `Check out the event ${name} I created! https://team4ahalfstar.appspot.com/${id}`,
     };
 
     fetch('/api/twilio', {
@@ -179,16 +181,16 @@ class CreateEvent extends React.Component {
             </div>
 
             {
-                      phones.map((phone, index) => (
-                        <div className="form-group" key={index}>
-                          <label className="col-md-4 control-label" htmlFor="to">Enter phone</label>
-                          <div className="col-md-4">
-                            <input style={{ borderRadius: 4 }} placeholder="(555) 555-5555" type="tel" name="to" id={index} value={phone} onChange={(e) => this.handlePhone(e, index)} />
-                            <button id="removephonebutton" name="removephonebutton" type="button" className="btn btn-danger btn-sm" onClick={(e) => this.removePhone(e, index)}>X</button>
-                          </div>
-                        </div>
-                      ))
-                    }
+              phones.map((phone, index) => (
+                <div className="form-group" key={index}>
+                  <label className="col-md-4 control-label" htmlFor="to">Enter phone</label>
+                  <div className="col-md-4">
+                    <input style={{ borderRadius: 4 }} placeholder="(555) 555-5555" type="tel" name="to" id={index} value={phone} onChange={(e) => this.handlePhone(e, index)} />
+                    <button id="removephonebutton" name="removephonebutton" type="button" className="btn btn-danger btn-sm" onClick={(e) => this.removePhone(e, index)}>X</button>
+                  </div>
+                </div>
+              ))
+            }
 
             <div className="form-group">
               <label className="col-md-4 control-label" htmlFor="phonebutton" />
